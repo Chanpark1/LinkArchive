@@ -1,6 +1,5 @@
 package com.chanyoung.jack.ui.adapter.recycler
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.chanyoung.jack.R

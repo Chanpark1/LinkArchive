@@ -2,7 +2,6 @@ package com.chanyoung.jack.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chanyoung.jack.data.model.Link
 import com.chanyoung.jack.data.repository.GroupRepositoryImpl
 import com.chanyoung.jack.data.repository.LinkRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel

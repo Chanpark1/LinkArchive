@@ -2,11 +2,13 @@ package com.chanyoung.jack.ui.activity
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import androidx.activity.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.chanyoung.jack.R
 import com.chanyoung.jack.databinding.ActivityMainBinding
 import com.chanyoung.jack.ui.activity.base.JMainBasicActivity
 import com.chanyoung.jack.ui.component.navigation.NavigationController
+import com.chanyoung.jack.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,6 +18,8 @@ class MainActivity :
 
     private lateinit var navController: NavigationController
 
+    private val viewModel : MainViewModel by viewModels()
+
     override fun viewBindingInflate(inflater: LayoutInflater): ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +27,7 @@ class MainActivity :
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewModel.createDefaultLinkGroup()
         setBottomNav()
     }
 

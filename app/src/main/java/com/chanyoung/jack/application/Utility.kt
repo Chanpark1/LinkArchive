@@ -1,5 +1,6 @@
 package com.chanyoung.jack.application
 
+import android.util.Patterns
 import java.util.regex.Pattern
 
 class WebUrlUtil {
@@ -18,6 +19,8 @@ class WebUrlUtil {
                 url
             }
         }
+
+        fun isValidUrl(url: String) : Boolean = Patterns.WEB_URL.matcher(url).matches()
 
     }
 }

@@ -127,13 +127,13 @@ class AddLinkFragment @Inject constructor() : JBasicFragment<FragmentAddLinkBind
         }
         val clipboardManager = JClipboardManager.getClipboardManager(requireContext())
 
-        if (clipboardManager.hasPrimaryClip()) {
+        if (clipboardManager.hasPrimaryClip() ) {
             val clip = clipboardManager.primaryClip
 
             val item = clip!!.getItemAt(0)
             val text = item.text.toString()
-            if (binding.fragAddLinkUrlInput.text.toString() != text) {
-                clipboardDialog.updateUrl(WebUrlUtil.addHttpPrefix(text))
+            if (binding.fragAddLinkUrlInput.text.toString() != text && WebUrlUtil.isValidUrl(text)) {
+                clipboardDialog.updateUrl(text)
                 clipboardDialog.show(childFragmentManager,"TAG")
                 clipData = text
             }

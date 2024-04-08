@@ -17,7 +17,8 @@ data class Link(
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "url") val url: String,
     @ColumnInfo(name = "memo") val memo: String,
-    @ColumnInfo(name = "groupId") val groupId: Int = 0
+    @ColumnInfo(name = "groupId") val groupId: Int = 0,
+    @ColumnInfo(name = "imagePath") val image_path : String
 )
 
 

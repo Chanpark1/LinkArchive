@@ -4,7 +4,6 @@ import androidx.navigation.fragment.findNavController
 import com.chanyoung.jack.R
 import com.chanyoung.jack.databinding.FragmentHomeBinding
 import com.chanyoung.jack.ui.fragment.basic.JBasicFragment
-import com.chanyoung.jack.ui.viewmodel.fragment.HomeFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

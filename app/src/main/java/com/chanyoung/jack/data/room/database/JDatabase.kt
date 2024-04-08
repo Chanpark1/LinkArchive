@@ -2,8 +2,6 @@ package com.chanyoung.jack.data.room.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.chanyoung.jack.data.model.LinkGroup
 import com.chanyoung.jack.data.model.GroupLinkCrossRef
 import com.chanyoung.jack.data.model.Link
@@ -11,7 +9,7 @@ import com.chanyoung.jack.data.room.dao.LinkDao
 import com.chanyoung.jack.data.room.dao.LinkGroupDao
 
 @Database (
-    version = 5,
+    version = 6,
     entities = [
         Link::class,
         LinkGroup::class,
