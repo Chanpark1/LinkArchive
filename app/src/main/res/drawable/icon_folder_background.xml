@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_activated="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#CBB3DDFF" />
+            <corners android:radius="14dp" /> <!-- 원하는 radius 값 지정 -->
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/transparent" />
+            <corners android:radius="14dp" /> <!-- 원하는 radius 값 지정 -->
+        </shape>
+    </item>
+</selector>
