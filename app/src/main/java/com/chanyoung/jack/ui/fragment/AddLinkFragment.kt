@@ -1,8 +1,5 @@
 package com.chanyoung.jack.ui.fragment
 
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Patterns
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,7 +14,7 @@ import com.chanyoung.jack.ui.component.dialog.CreateGroupDialog
 import com.chanyoung.jack.ui.component.dialog.PasteLinkDialog
 import com.chanyoung.jack.ui.fragment.basic.JBasicFragment
 import com.chanyoung.jack.ui.viewmodel.fragment.AddLinkViewModel
-import com.chanyoung.jack.ui.viewmodel.networking.WebScrapperViewModel
+import com.chanyoung.jack.ui.viewmodel.networking.WebScraperViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -25,7 +22,7 @@ import javax.inject.Inject
 class AddLinkFragment @Inject constructor() : JBasicFragment<FragmentAddLinkBinding>() {
 
     private val addLinViewModel: AddLinkViewModel by activityViewModels()
-    private val webScrapperViewModel: WebScrapperViewModel by activityViewModels()
+    private val webScrapperViewModel: WebScraperViewModel by activityViewModels()
 
     private val createGroupDialog: CreateGroupDialog by lazy { CreateGroupDialog(::createGroup) }
     private val clipboardDialog: PasteLinkDialog by lazy { PasteLinkDialog(::setClipData) }

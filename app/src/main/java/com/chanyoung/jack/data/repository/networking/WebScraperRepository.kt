@@ -1,6 +1,5 @@
 package com.chanyoung.jack.data.repository.networking
 
-import android.util.Patterns
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
@@ -9,10 +8,9 @@ import org.jsoup.Jsoup
 import java.io.IOException
 import javax.inject.Inject
 
-class WebScrapperRepository @Inject constructor(
+class WebScraperRepository @Inject constructor(
     private val okHttpClient: OkHttpClient
 ) {
-
     private val _query = "meta[property^=og:]"
     private val _property = "property"
     private val _image = "og:image"

@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.chanyoung.jack.data.repository.GroupRepositoryImpl
 import com.chanyoung.jack.data.repository.LinkRepositoryImpl
-import com.chanyoung.jack.data.repository.networking.WebScrapperRepository
+import com.chanyoung.jack.data.repository.networking.WebScraperRepository
 import com.chanyoung.jack.data.room.dao.LinkDao
 import com.chanyoung.jack.data.room.dao.LinkGroupDao
 import com.chanyoung.jack.data.room.database.JDatabase
@@ -53,7 +53,7 @@ class DatabaseModules {
 class NetworkModule {
     @Provides
     @Singleton
-    fun provideWebScrapperRepo(okHttpClient: OkHttpClient) : WebScrapperRepository = WebScrapperRepository(okHttpClient)
+    fun provideWebScrapperRepo(okHttpClient: OkHttpClient) : WebScraperRepository = WebScraperRepository(okHttpClient)
 
     @Provides
     @Singleton
