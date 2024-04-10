@@ -9,13 +9,17 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.activityViewModels
+import com.chanyoung.jack.application.ErrorMessages
 import com.chanyoung.jack.databinding.DialogCreateGroupBinding
 import com.chanyoung.jack.ui.component.dialog.basic.JBasicBottomSheetDialog
+import com.chanyoung.jack.ui.viewmodel.fragment.AddLinkViewModel
 
 class CreateGroupDialog(
     private val onSave: (String) -> Unit
 ) : JBasicBottomSheetDialog<DialogCreateGroupBinding>() {
 
+    private val addLinkViewModel: AddLinkViewModel by activityViewModels()
     override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -24,15 +28,21 @@ class CreateGroupDialog(
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.dialogCreateBtn.setOnClickListener {
 
-            if (binding.dialogCreateTitleInput.text.toString() != "") {
+        binding.dialogCreateBtn.setOnClickListener {
+            if(binding.dialogCreateTitleInput.text.toString() != "") {
                 onSave(binding.dialogCreateTitleInput.text.toString())
+            } else {
+                binding.dialogCreateTitleInput.error = ErrorMessages.TITLE_EMPTY
+            }
+        }
+
+        addLinkViewModel.insertGroupResult.observe(viewLifecycleOwner) { result ->
+            if(result) {
                 dismiss()
             } else {
-                Toast.makeText(requireContext(),"Group name cannot be empty!", Toast.LENGTH_SHORT).show()
+                binding.dialogCreateTitleInput.error = ErrorMessages.GROUP_EXISTS
             }
-
         }
     }
 
@@ -42,11 +52,15 @@ class CreateGroupDialog(
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 ViewCompat.setOnApplyWindowInsetsListener(requireDialog().window?.decorView!!) { _, insets ->
                     val imeHeight = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
-                    val navigationBarHeight =
-                        insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+
+                    val navigationBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+
                     val topPadding = binding.root.paddingTop
+
                     val startPadding = binding.root.paddingStart
+
                     val endPadding = binding.root.paddingEnd
+
                     binding.root.setPadding(
                         startPadding,
                         topPadding,

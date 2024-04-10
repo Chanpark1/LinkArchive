@@ -13,18 +13,18 @@ import androidx.room.PrimaryKey
 )
 
 data class Link(
-    @PrimaryKey(autoGenerate = true) val lid: Int,
+    @PrimaryKey(autoGenerate = true) val lid: Int = 0,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "url") val url: String,
     @ColumnInfo(name = "memo") val memo: String,
-    @ColumnInfo(name = "groupId") val groupId: Int = 0,
-    @ColumnInfo(name = "imagePath") val image_path : String
+    @ColumnInfo(name = "groupId") val groupId: Int? = null,
+    @ColumnInfo(name = "imagePath") val image_path : String? = null
 )
 
 
 @Entity
 data class LinkGroup(
-    @PrimaryKey(autoGenerate = true) val gid: Int,
+    @PrimaryKey(autoGenerate = true) val gid: Int = 0,
     @ColumnInfo(name = "name") val name: String
 )
 

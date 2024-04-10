@@ -18,4 +18,12 @@ interface LinkGroupDao {
     @Transaction
     @Query("SELECT * FROM LinkGroup")
     suspend fun getAllGroup() : List<LinkGroup>
+
+    @Transaction
+    @Query("SELECT COUNT(*) From LinkGroup WHERE name = :groupName")
+    suspend fun  checkDuplicateGroup(groupName : String) : Int
+
+    @Transaction
+    @Query("SELECT gid FROM LinkGroup WHERE name = :groupName")
+    suspend fun getGroupId(groupName : String) : Int
 }

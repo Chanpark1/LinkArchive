@@ -74,18 +74,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/frag_add_link_thumbnail"
-                    android:layout_width="300dp"
-                    android:layout_height="200dp"
+                <FrameLayout
+                    android:id="@+id/frag_add_link_frame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/frag_add_link_title_logo"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:contentDescription="@string/content_description"
                     android:layout_marginTop="15dp"
-                    android:src="@drawable/app_logo_blue"
-                    android:visibility="visible"/>
+                    android:background="@drawable/image_view_custom">
+                    <ImageView
+                        android:id="@+id/frag_add_link_thumbnail"
+                        android:layout_width="300dp"
+                        android:layout_height="200dp"
+                        android:contentDescription="@string/content_description"
+                        android:src="@drawable/app_logo_blue"/>
+
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/frag_add_link_title_logo"
@@ -98,7 +104,7 @@
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@+id/frag_add_link_title_input"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/frag_add_link_thumbnail" />
+                    app:layout_constraintTop_toBottomOf="@+id/frag_add_link_frame" />
 
                 <EditText
                     android:id="@+id/frag_add_link_title_input"
@@ -161,7 +167,7 @@
                         android:id="@+id/frag_add_link_rv_logo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Group"
+                        android:text="@string/group"
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -204,7 +210,7 @@
                 <EditText
                     android:id="@+id/frag_add_link_memo_input"
                     android:layout_width="0dp"
-                    android:layout_height="300dp"
+                    android:layout_height="200dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="20dp"
                     android:autofillHints="no"

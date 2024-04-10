@@ -16,5 +16,7 @@ interface GroupRepository {
     suspend fun hasUserCreatedGroup(): Boolean
     suspend fun getGroupCount()
     suspend fun createDefaultGroup()
+    suspend fun checkDuplicateGroup(groupName : String) : Int
+    suspend fun getGroupId(groupName : String) : Int
 
 }

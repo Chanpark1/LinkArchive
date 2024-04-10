@@ -11,8 +11,7 @@
         android:paddingEnd="20dp"
         android:background="@drawable/dialog_background"
         android:theme="@style/AppTheme"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-        >
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
         <TextView
             android:id="@+id/dialog_create_logo"

@@ -24,4 +24,8 @@
     <string name="https">https://</string>
     <string name="clipboard">Clipboard</string>
     <string name="paste_link">Paste Link</string>
+    <string name="url_invalid">Invalid URL 😢</string>
+    <string name="url_empty">Link Url is empty 😢</string>
+    <string name="title_empty">Title is empty 😢</string>
+    <string name="group_empty">Select your Group 😢</string>
 </resources>

@@ -1,5 +1,7 @@
 package com.chanyoung.jack.data.repository.networking
 
+import android.widget.Switch
+import com.chanyoung.jack.application.WebUrlUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
@@ -22,13 +24,13 @@ class WebScraperRepository @Inject constructor(
         var title: String? = null
         var imageUrl: String? = null
 
-        if(data.isEmpty()) Pair("", "")
+        if(data.isEmpty() || !WebUrlUtil.checkUrlPrefix(data)) return@withContext Pair("", "")
 
         try {
             val request = Request.Builder().url(data).build()
             val response = okHttpClient.newCall(request).execute()
 
-            if(!response.isSuccessful) Pair("", "")
+            if(!response.isSuccessful) return@withContext Pair("", "")
 
             val document = Jsoup.connect(data).get()
             val elements = document.select(_query)

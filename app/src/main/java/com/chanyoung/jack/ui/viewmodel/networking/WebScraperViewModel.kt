@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WebScraperViewModel @Inject constructor(
-    private val scrapRepo : WebScraperRepository
+    private val scrapRepo: WebScraperRepository
 ) : ViewModel() {
 
     private val _title = MutableLiveData<String>()
@@ -17,11 +17,16 @@ class WebScraperViewModel @Inject constructor(
     private val _imageUrl = MutableLiveData<String>()
     val imageUrl: LiveData<String> get() = _imageUrl
 
-    fun scrapUrl(url : String) {
+    fun scrapUrl(url: String) {
         viewModelScope.launch {
             val (title, imageUrl) = scrapRepo.setScrap(url)
             _title.value = title ?: ""
             _imageUrl.value = imageUrl ?: ""
         }
+    }
+
+    fun resetLiveData() {
+        _imageUrl.value = ""
+        _title.value = ""
     }
 }

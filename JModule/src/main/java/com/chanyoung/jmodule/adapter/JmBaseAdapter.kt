@@ -1,5 +1,6 @@
 package com.chanyoung.jmodule.adapter
 
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class JmBaseAdapter<R, VH : RecyclerView.ViewHolder>(
@@ -8,6 +9,7 @@ abstract class JmBaseAdapter<R, VH : RecyclerView.ViewHolder>(
 
     fun setList(newList: List<R>) {
         this.itemList = newList
+
         notifyDataSetChanged()
     }
 

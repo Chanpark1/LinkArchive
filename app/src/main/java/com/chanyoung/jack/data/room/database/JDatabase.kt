@@ -9,7 +9,7 @@ import com.chanyoung.jack.data.room.dao.LinkDao
 import com.chanyoung.jack.data.room.dao.LinkGroupDao
 
 @Database (
-    version = 6,
+    version = 7,
     entities = [
         Link::class,
         LinkGroup::class,

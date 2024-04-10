@@ -1,5 +1,6 @@
 package com.chanyoung.jack.ui.adapter.recycler
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.chanyoung.jack.R
@@ -35,13 +36,15 @@ class LinkGroupItemViewHolder(binding : ItemLinkgroupBinding) : JmBaseViewHolder
 
     fun setItem(group : LinkGroup, selectOperation: (Int) -> Unit, selectedGroupId: Int) {
         binding.linkGroup = group
+        // 2.
         binding.root.setOnClickListener{
             selectOperation(group.gid)
+            // 여기서 0 리턴이 됨
+            Log.d("adapter", group.gid.toString())
             updateBackground(selectedGroupId)
         }
         updateBackground(selectedGroupId)
     }
-
 
     private fun updateBackground(selectedGroupId: Int) {
         val backgroundColorResId = if (binding.linkGroup?.gid == selectedGroupId) R.drawable.link_group_item_selected else R.drawable.link_group_item_unselected

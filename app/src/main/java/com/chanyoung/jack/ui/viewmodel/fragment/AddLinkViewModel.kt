@@ -1,5 +1,6 @@
 package com.chanyoung.jack.ui.viewmodel.fragment
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,9 +25,10 @@ class AddLinkViewModel @Inject constructor(
     private val _linkGroups = MutableLiveData<List<LinkGroup>>()
     val linkGroups : LiveData<List<LinkGroup>> get() = _linkGroups
 
-    fun onGroupItemSelected(groupId : Int) {
-        _selectedGroupId.value = groupId
-    }
+    private val _insertGroupResult = MutableLiveData<Boolean>()
+    val insertGroupResult: LiveData<Boolean> get() = _insertGroupResult
+
+    fun onGroupItemSelected(groupId : Int) { _selectedGroupId.value = groupId }
 
     fun setGroupList() {
         viewModelScope.launch {
@@ -37,10 +39,26 @@ class AddLinkViewModel @Inject constructor(
 
     fun insertGroup(linkGroup : LinkGroup) {
         viewModelScope.launch {
-            groupRepo.insertGroup(linkGroup)
-            val updatedGroups = _linkGroups.value?.toMutableList() ?: mutableListOf()
-            updatedGroups.add(linkGroup)
-            _linkGroups.value = updatedGroups
+            if(groupRepo.checkDuplicateGroup(linkGroup.name) < 1) {
+
+                _insertGroupResult.value = true
+
+                groupRepo.insertGroup(linkGroup)
+
+                val updatedGroups = _linkGroups.value?.toMutableList() ?: mutableListOf()
+
+                val gid = groupRepo.getGroupId(linkGroup.name)
+
+                val finalGroup = LinkGroup(gid = gid, name = linkGroup.name)
+
+                updatedGroups.add(finalGroup)
+
+                _linkGroups.value = updatedGroups
+
+            } else {
+                _insertGroupResult.value = false
+            }
+
         }
     }
 
