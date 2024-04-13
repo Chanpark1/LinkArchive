@@ -10,7 +10,6 @@ import com.chanyoung.jack.ui.fragment.basic.JBasicFragment
 import com.chanyoung.jack.ui.viewmodel.fragment.HomeFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-
 @AndroidEntryPoint
 class HomeFragment @Inject constructor() :
     JBasicFragment<FragmentHomeBinding>() {
@@ -49,5 +48,10 @@ class HomeFragment @Inject constructor() :
     private fun onSelectItem(lid : Int) {
         val action = HomeFragmentDirections.actionHomeFragmentToLinkDetailFragment(lid)
         findNavController().navigate(action)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshData()
     }
 }

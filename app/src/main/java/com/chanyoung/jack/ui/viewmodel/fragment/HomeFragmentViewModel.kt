@@ -1,14 +1,10 @@
 package com.chanyoung.jack.ui.viewmodel.fragment
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.paging.*
 import com.chanyoung.jack.data.model.Link
 import com.chanyoung.jack.data.repository.pagination.ListLinkPagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,8 +25,26 @@ class HomeFragmentViewModel @Inject constructor(
         enablePlaceholders = ENABLE_PLACEHOLDERS
     )
 
-    private val pager = Pager(pagingConfig) { pagingSource }
+    private val _links = MutableLiveData<PagingData<Link>>()
+    val links: LiveData<PagingData<Link>> get() = _links
 
-    val links : LiveData<PagingData<Link>> = pager.flow.map { PagingData -> PagingData }.asLiveData(viewModelScope.coroutineContext)
+    init {
+        loadData()
+    }
+
+    private fun loadData() {
+        val pager = Pager(pagingConfig) { pagingSource }
+
+        pager.flow
+            .cachedIn(viewModelScope)
+            .asLiveData()
+            .observeForever { pagingData ->
+                _links.value = pagingData
+            }
+    }
+
+    fun refreshData() {
+        loadData()
+    }
 
 }
