@@ -34,8 +34,6 @@ class AddLinkFragment @Inject constructor() : JBasicFragment<FragmentAddLinkBind
     private val createGroupDialog: CreateGroupDialog by lazy { CreateGroupDialog(::createGroup) }
     private val clipboardDialog: PasteLinkDialog by lazy { PasteLinkDialog(::setClipData) }
 
-    override fun layoutId(): Int { return R.layout.fragment_add_link }
-
     private lateinit var adapter: AddLinkGroupItemAdapter
 
     private lateinit var clipData: String
@@ -43,7 +41,7 @@ class AddLinkFragment @Inject constructor() : JBasicFragment<FragmentAddLinkBind
     private var groupId: Int? = null
 
     private var imagePath: String? = null
-
+    override fun layoutId(): Int { return R.layout.fragment_add_link }
     override fun onCreateView() {
 
         initRecyclerView()
@@ -102,11 +100,12 @@ class AddLinkFragment @Inject constructor() : JBasicFragment<FragmentAddLinkBind
                     .load(it)
                     .format(DecodeFormat.PREFER_ARGB_8888)
                     .encodeQuality(100)
+                    .error(R.drawable.link_place_holder)
                     .into(binding.fragAddLinkThumbnail)
 
                 it
             } else {
-                binding.fragAddLinkThumbnail.setImageResource(R.drawable.app_logo_blue)
+                binding.fragAddLinkThumbnail.setImageResource(R.drawable.link_place_holder)
                 ""
             }
         }
@@ -164,12 +163,16 @@ class AddLinkFragment @Inject constructor() : JBasicFragment<FragmentAddLinkBind
         if (clipboardManager.hasPrimaryClip()) {
             val clip = clipboardManager.primaryClip
 
-            val item = clip!!.getItemAt(0)
-            val text = item.text.toString()
-            if (binding.fragAddLinkUrlInput.text.toString() != text && WebUrlUtil.checkUrlPrefix(text)) {
-                clipboardDialog.updateUrl(text)
-                clipboardDialog.show(childFragmentManager, "TAG")
-                clipData = text
+            try {
+                val item = clip!!.getItemAt(0)
+                val text = item.text.toString()
+                if (binding.fragAddLinkUrlInput.text.toString() != text && WebUrlUtil.checkUrlPrefix(text)) {
+                    clipboardDialog.updateUrl(text)
+                    clipboardDialog.show(childFragmentManager, "TAG")
+                    clipData = text
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }

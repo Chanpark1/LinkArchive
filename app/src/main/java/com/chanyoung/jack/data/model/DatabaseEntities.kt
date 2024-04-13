@@ -29,7 +29,6 @@ data class LinkGroup(
 )
 
 
-// Group 과 Link 간의 다대다 관계를 나타내는 매핑 테이블
 @Entity(primaryKeys = ["groupId", "linkId"])
 data class GroupLinkCrossRef(
     val groupId: Int,

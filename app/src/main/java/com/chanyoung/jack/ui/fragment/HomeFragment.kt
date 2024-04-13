@@ -1,9 +1,13 @@
 package com.chanyoung.jack.ui.fragment
 
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.chanyoung.jack.R
 import com.chanyoung.jack.databinding.FragmentHomeBinding
+import com.chanyoung.jack.ui.adapter.recycler.AllLinkListAdapter
 import com.chanyoung.jack.ui.fragment.basic.JBasicFragment
+import com.chanyoung.jack.ui.viewmodel.fragment.HomeFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -11,19 +15,19 @@ import javax.inject.Inject
 class HomeFragment @Inject constructor() :
     JBasicFragment<FragmentHomeBinding>() {
 
+    private val viewModel : HomeFragmentViewModel by activityViewModels()
+
+    private lateinit var adapter : AllLinkListAdapter
+    override fun layoutId(): Int { return R.layout.fragment_home }
     override fun onCreateView() {
 
         initRecyclerView()
 
         setAddLinkButton()
-
     }
 
     private fun setAddLinkButton() {
-        val addLinkButton = binding.fragHomeAddBtn
-        addLinkButton?.setOnClickListener {
-            navigateToAddLinkFragment()
-        }
+        binding.fragHomeAddBtn.setOnClickListener { navigateToAddLinkFragment() }
     }
 
     private fun navigateToAddLinkFragment() {
@@ -31,8 +35,19 @@ class HomeFragment @Inject constructor() :
         findNavController().navigate(action)
     }
 
-    override fun layoutId(): Int {
-        return R.layout.fragment_home
+    override fun initRecyclerView() {
+        adapter = AllLinkListAdapter { linkId -> onSelectItem(linkId) }
+
+        binding.fragHomeRv.layoutManager = LinearLayoutManager(requireContext())
+        binding.fragHomeRv.adapter = adapter
+
+        viewModel.links.observe(viewLifecycleOwner) {links ->
+            adapter.submitData(viewLifecycleOwner.lifecycle, links)
+        }
     }
 
+    private fun onSelectItem(lid : Int) {
+        val action = HomeFragmentDirections.actionHomeFragmentToLinkDetailFragment(lid)
+        findNavController().navigate(action)
+    }
 }

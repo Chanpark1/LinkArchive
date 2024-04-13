@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.chanyoung.jack.data.repository.GroupRepositoryImpl
 import com.chanyoung.jack.data.repository.LinkRepositoryImpl
 import com.chanyoung.jack.data.repository.networking.WebScraperRepository
+import com.chanyoung.jack.data.repository.pagination.ListLinkPagingSource
 import com.chanyoung.jack.data.room.dao.LinkDao
 import com.chanyoung.jack.data.room.dao.LinkGroupDao
 import com.chanyoung.jack.data.room.database.JDatabase
@@ -44,8 +45,6 @@ class DatabaseModules {
 
     @Provides
     fun provideGroupRepo(groupDao: LinkGroupDao): GroupRepositoryImpl = GroupRepositoryImpl(groupDao)
-
-
 }
 
 @Module
@@ -69,4 +68,12 @@ class NetworkModule {
             .build()
     }
 
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+class OtherModules {
+    @Provides
+    @Singleton
+    fun providePagingSource(linkRepo : LinkRepositoryImpl) : ListLinkPagingSource = ListLinkPagingSource(linkRepo)
 }

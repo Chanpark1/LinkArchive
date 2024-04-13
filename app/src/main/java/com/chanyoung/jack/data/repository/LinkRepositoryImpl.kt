@@ -25,4 +25,15 @@ class LinkRepositoryImpl @Inject constructor(
             dao.getAllLinks()
         }
     }
+
+    override suspend fun getLink(lid: Int): Link {
+        return withContext(Dispatchers.IO) {
+            dao.getLink(lid)
+        }
+    }
+    override suspend fun getPaginatedLinks(index : Int, loadSize : Int): List<Link> {
+        return withContext(Dispatchers.IO) {
+            dao.getPaginatedLinks(index, loadSize)
+        }
+    }
 }

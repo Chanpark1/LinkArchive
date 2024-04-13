@@ -33,6 +33,8 @@ class NavigationController(
                     true
                 R.id.addLinkFragment -> bottomNavigationView.menu.findItem(R.id.homeFragment)?.isChecked =
                     true
+                R.id.linkDetailFragment -> bottomNavigationView.menu.findItem(R.id.homeFragment)?.isChecked =
+                    true
                 else -> {
                     // Uncheck all menu items if the destination doesn't match
                     bottomNavigationView.menu.setGroupCheckable(0, true, false)
