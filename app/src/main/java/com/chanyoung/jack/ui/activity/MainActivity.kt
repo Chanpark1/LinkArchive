@@ -1,15 +1,19 @@
 package com.chanyoung.jack.ui.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.chanyoung.jack.R
 import com.chanyoung.jack.databinding.ActivityMainBinding
 import com.chanyoung.jack.ui.activity.base.JMainBasicActivity
 import com.chanyoung.jack.ui.component.navigation.NavigationController
 import com.chanyoung.jack.ui.viewmodel.MainViewModel
+import com.chanyoung.jack.ui.viewmodel.fragment.HomeFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,6 +23,7 @@ class MainActivity :
     private lateinit var navController: NavigationController
 
     private val viewModel: MainViewModel by viewModels()
+    private val homeFragViewModel : HomeFragmentViewModel by viewModels()
 
     override fun viewBindingInflate(inflater: LayoutInflater): ActivityMainBinding =
         ActivityMainBinding.inflate(layoutInflater)
@@ -45,9 +50,14 @@ class MainActivity :
     private fun setAddLinkButton() {
         binding.mainAddLinkBtn.setOnClickListener {
             val intent = Intent(this, AddLinkActivity::class.java)
-            startActivity(intent)
+            addLinkLauncher.launch(intent)
         }
+    }
 
+    private val addLinkLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if(result.resultCode == Activity.RESULT_OK) {
+            homeFragViewModel.refreshData()
+        }
     }
 
 

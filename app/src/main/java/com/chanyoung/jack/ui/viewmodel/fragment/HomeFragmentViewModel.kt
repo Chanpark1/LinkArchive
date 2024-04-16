@@ -41,6 +41,7 @@ class HomeFragmentViewModel @Inject constructor(
             .observeForever { pagingData ->
                 _links.value = pagingData
             }
+
     }
 
     fun refreshData() {

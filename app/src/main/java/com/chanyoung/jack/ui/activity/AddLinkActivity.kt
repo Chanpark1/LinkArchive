@@ -1,5 +1,7 @@
 package com.chanyoung.jack.ui.activity
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -127,6 +129,9 @@ class AddLinkActivity : JMainBasicActivity<ActivityAddLinkBinding>() {
                 binding.addLinkUrlInput.error = ErrorMessages.INVALID_URL
             } else {
                 addLinkViewModel.insertLink(Link(lid = 0, title = title, url = link, memo = memo, image_path = imagePath, groupId = groupId))
+
+                val resultIntent = Intent()
+                setResult(Activity.RESULT_OK, resultIntent)
                 finish()
             }
         }

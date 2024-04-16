@@ -1,10 +1,11 @@
 package com.chanyoung.jack.ui.fragment
 
+import android.content.Intent
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chanyoung.jack.R
 import com.chanyoung.jack.databinding.FragmentHomeBinding
+import com.chanyoung.jack.ui.activity.LinkDetailActivity
 import com.chanyoung.jack.ui.adapter.recycler.AllLinkListAdapter
 import com.chanyoung.jack.ui.fragment.basic.JBasicFragment
 import com.chanyoung.jack.ui.viewmodel.fragment.HomeFragmentViewModel
@@ -19,9 +20,7 @@ class HomeFragment @Inject constructor() :
     private lateinit var adapter : AllLinkListAdapter
     override fun layoutId(): Int { return R.layout.fragment_home }
     override fun onCreateView() {
-
         initRecyclerView()
-
     }
 
     override fun initRecyclerView() {
@@ -36,12 +35,10 @@ class HomeFragment @Inject constructor() :
     }
 
     private fun onSelectItem(lid : Int) {
-        val action = HomeFragmentDirections.actionHomeFragmentToLinkDetailFragment(lid)
-        findNavController().navigate(action)
+        val intent = Intent(requireContext(), LinkDetailActivity::class.java)
+        intent.putExtra("lid", lid)
+        startActivity(intent)
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.refreshData()
-    }
+
 }

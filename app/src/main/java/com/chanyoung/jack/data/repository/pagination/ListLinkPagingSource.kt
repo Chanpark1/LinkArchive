@@ -1,6 +1,5 @@
 package com.chanyoung.jack.data.repository.pagination
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.chanyoung.jack.data.model.Link
