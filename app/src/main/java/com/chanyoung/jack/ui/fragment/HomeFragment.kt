@@ -22,16 +22,6 @@ class HomeFragment @Inject constructor() :
 
         initRecyclerView()
 
-        setAddLinkButton()
-    }
-
-    private fun setAddLinkButton() {
-        binding.fragHomeAddBtn.setOnClickListener { navigateToAddLinkFragment() }
-    }
-
-    private fun navigateToAddLinkFragment() {
-        val action = HomeFragmentDirections.actionHomeFragmentToAddLinkFragment()
-        findNavController().navigate(action)
     }
 
     override fun initRecyclerView() {

@@ -1,14 +1,18 @@
-package com.chanyoung.jack.ui.viewmodel.fragment
+package com.chanyoung.jack.ui.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chanyoung.jack.application.WebUrlUtil
 import com.chanyoung.jack.data.model.Link
 import com.chanyoung.jack.data.model.LinkGroup
 import com.chanyoung.jack.data.repository.GroupRepositoryImpl
 import com.chanyoung.jack.data.repository.LinkRepositoryImpl
+import com.chanyoung.jack.ui.component.clipboard.JClipboardManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,6 +22,7 @@ class AddLinkViewModel @Inject constructor(
     private val groupRepo : GroupRepositoryImpl
 ) : ViewModel() {
 
+
     private val _selectedGroupId = MutableLiveData<Int>()
     val selectedGroupId : LiveData<Int> get() = _selectedGroupId
 
@@ -26,6 +31,9 @@ class AddLinkViewModel @Inject constructor(
 
     private val _insertGroupResult = MutableLiveData<Boolean>()
     val insertGroupResult: LiveData<Boolean> get() = _insertGroupResult
+
+    private val _clipData = MutableLiveData<String>()
+    val clipData : LiveData<String> get() = _clipData
 
     fun onGroupItemSelected(groupId : Int) { _selectedGroupId.value = groupId }
 
@@ -65,6 +73,30 @@ class AddLinkViewModel @Inject constructor(
         viewModelScope.launch {
             linkRepo.insertLink(link)
         }
+    }
+
+
+   fun handlerPrimaryClip(context : Context, delayMillis: Long) {
+
+       viewModelScope.launch {
+           delay(delayMillis)
+
+           val clipboardManager = JClipboardManager.getClipboardManager(context)
+           if(clipboardManager.hasPrimaryClip()) {
+               try {
+                   val clip = clipboardManager.primaryClip
+                   val text = clip?.getItemAt(0)?.text?.toString()
+                   if (text != null && WebUrlUtil.checkUrlPrefix(text)) {
+                       _clipData.value = text
+                   }
+               } catch (e : Exception) {
+                   e.printStackTrace()
+                   _clipData.value = null
+               }
+
+           }
+
+       }
     }
 
 

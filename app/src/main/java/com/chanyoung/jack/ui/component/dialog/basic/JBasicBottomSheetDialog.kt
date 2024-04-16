@@ -26,4 +26,9 @@ abstract class JBasicBottomSheetDialog<T : ViewBinding> : BottomSheetDialogFragm
         super.onDestroyView()
         _binding = null
     }
+
+    override fun onDetach() {
+        super.onDetach()
+        _binding = null
+    }
 }

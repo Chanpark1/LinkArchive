@@ -6,14 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.activityViewModels
 import com.chanyoung.jack.application.ErrorMessages
 import com.chanyoung.jack.databinding.DialogCreateGroupBinding
 import com.chanyoung.jack.ui.component.dialog.basic.JBasicBottomSheetDialog
-import com.chanyoung.jack.ui.viewmodel.fragment.AddLinkViewModel
+import com.chanyoung.jack.ui.viewmodel.AddLinkViewModel
 
 class CreateGroupDialog(
     private val onSave: (String) -> Unit

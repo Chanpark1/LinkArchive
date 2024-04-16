@@ -15,14 +15,14 @@ class HomeFragmentViewModel @Inject constructor(
         private const val PAGE_SIZE = 5
         private const val INITIAL_LOAD_SIZE = 5
         private const val PREFETCH_DISTANCE = 3
-        private const val ENABLE_PLACEHOLDERS = false
+        private const val ENABLE_PLACE_HOLDERS = false
     }
 
     private val pagingConfig = PagingConfig(
         pageSize = PAGE_SIZE,
         initialLoadSize = INITIAL_LOAD_SIZE,
         prefetchDistance = PREFETCH_DISTANCE,
-        enablePlaceholders = ENABLE_PLACEHOLDERS
+        enablePlaceholders = ENABLE_PLACE_HOLDERS
     )
 
     private val _links = MutableLiveData<PagingData<Link>>()

@@ -1,5 +1,6 @@
 package com.chanyoung.jack.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.viewModels
@@ -13,14 +14,14 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity :
-    JMainBasicActivity<ActivityMainBinding>()
-{
+    JMainBasicActivity<ActivityMainBinding>() {
 
     private lateinit var navController: NavigationController
 
-    private val viewModel : MainViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels()
 
-    override fun viewBindingInflate(inflater: LayoutInflater): ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+    override fun viewBindingInflate(inflater: LayoutInflater): ActivityMainBinding =
+        ActivityMainBinding.inflate(layoutInflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,14 +30,26 @@ class MainActivity :
 
         viewModel.createDefaultLinkGroup()
         setBottomNav()
+        setAddLinkButton()
     }
 
     private fun setBottomNav() {
-    val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-    navController = NavigationController(
-        navHostFragment = navHostFragment,
-        bottomNavigationView = binding.mainNav
-    )
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = NavigationController(
+            navHostFragment = navHostFragment,
+            bottomNavigationView = binding.mainNav
+        )
     }
+
+    private fun setAddLinkButton() {
+        binding.mainAddLinkBtn.setOnClickListener {
+            val intent = Intent(this, AddLinkActivity::class.java)
+            startActivity(intent)
+        }
+
+    }
+
+
 
 }

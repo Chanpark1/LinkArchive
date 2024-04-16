@@ -23,18 +23,19 @@ class NavigationController(
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.homeFragment -> bottomNavigationView.menu.findItem(R.id.homeFragment)?.isChecked =
-                    true
-                R.id.libraryFragment -> bottomNavigationView.menu.findItem(R.id.libraryFragment)?.isChecked =
-                    true
-                R.id.searchFragment -> bottomNavigationView.menu.findItem(R.id.searchFragment)?.isChecked =
-                    true
-                R.id.bookmarkFragment -> bottomNavigationView.menu.findItem(R.id.bookmarkFragment)?.isChecked =
-                    true
-                R.id.addLinkFragment -> bottomNavigationView.menu.findItem(R.id.homeFragment)?.isChecked =
-                    true
-                R.id.linkDetailFragment -> bottomNavigationView.menu.findItem(R.id.homeFragment)?.isChecked =
-                    true
+                R.id.homeFragment -> {
+                    bottomNavigationView.menu.findItem(R.id.homeFragment)?.isChecked = true
+                }
+                R.id.libraryFragment -> {
+                    bottomNavigationView.menu.findItem(R.id.libraryFragment)?.isChecked = true
+                }
+                R.id.searchFragment -> {
+                    bottomNavigationView.menu.findItem(R.id.searchFragment)?.isChecked = true
+                }
+                R.id.bookmarkFragment -> {
+                    bottomNavigationView.menu.findItem(R.id.bookmarkFragment)?.isChecked = true
+
+                }
                 else -> {
                     // Uncheck all menu items if the destination doesn't match
                     bottomNavigationView.menu.setGroupCheckable(0, true, false)
@@ -43,6 +44,5 @@ class NavigationController(
             }
 
         }
-
     }
 }

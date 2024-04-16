@@ -67,21 +67,7 @@
             app:layout_constraintTop_toBottomOf="@+id/frag_home_view" />
 
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/frag_home_add_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="10dp"
-            android:text="@string/new_link"
-            android:fontFamily="@font/montserrat_bold"
-            android:textColor="@color/white"
-            android:gravity="center"
-            app:icon="@drawable/baseline_add_24"
-            android:textSize="12sp"
-            android:backgroundTint="@color/app_color"
-            android:contentDescription="@string/content_description"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

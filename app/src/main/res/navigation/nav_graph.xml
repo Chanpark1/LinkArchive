@@ -25,13 +25,6 @@
             android:id="@+id/action_homeFragment_to_bookmarkFragment"
             app:destination="@id/bookmarkFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_addLinkFragment"
-            app:destination="@id/addLinkFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-        <action
             android:id="@+id/action_homeFragment_to_linkDetailFragment"
             app:destination="@id/linkDetailFragment">
             <argument
@@ -73,6 +66,7 @@
         <action
             android:id="@+id/action_searchFragment_to_bookmarkFragment"
             app:destination="@id/bookmarkFragment" />
+
     </fragment>
 
     <fragment
@@ -91,12 +85,6 @@
             android:id="@+id/action_bookmarkFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
     </fragment>
-
-    <fragment
-        android:id="@+id/addLinkFragment"
-        android:name="com.chanyoung.jack.ui.fragment.AddLinkFragment"
-        android:label="AddLinkFragment"
-        tools:layout="@layout/fragment_add_link"/>
 
     <fragment
         android:id="@+id/linkDetailFragment"

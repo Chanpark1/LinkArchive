@@ -10,6 +10,7 @@
         android:paddingStart="10dp"
         android:paddingTop="10dp"
         android:paddingEnd="10dp"
+        android:theme="@style/AppTheme"
         tools:context=".ui.fragment.LibraryFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +26,6 @@
                 android:id="@+id/frag_lib_logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_bold"
                 android:text="@string/library"
                 android:textColor="@color/black"
                 android:textSize="21sp"

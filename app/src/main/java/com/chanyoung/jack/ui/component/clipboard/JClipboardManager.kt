@@ -29,5 +29,4 @@ class JClipboardManager private constructor() {
         }
 
     }
-
 }
