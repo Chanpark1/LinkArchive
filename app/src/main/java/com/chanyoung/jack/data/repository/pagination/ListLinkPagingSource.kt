@@ -27,7 +27,7 @@ class ListLinkPagingSource(
                 prevKey = if (currentPage == INIT_PAGE_INDEX) null else currentPage - 1,
                 nextKey = if (links.isEmpty()) null else currentPage + 1
             )
-        } catch (e: java.lang.Exception) {
+        } catch (e: Exception) {
             LoadResult.Error(e)
         }
     }

@@ -18,9 +18,9 @@ import com.chanyoung.jack.data.model.Link
 import com.chanyoung.jack.data.model.LinkGroup
 import com.chanyoung.jack.databinding.ActivityAddLinkBinding
 import com.chanyoung.jack.ui.activity.base.JMainBasicActivity
-import com.chanyoung.jack.ui.adapter.recycler.AddLinkGroupItemAdapter
+import com.chanyoung.jack.ui.adapter.recycler.GroupItemAdapter
 import com.chanyoung.jack.ui.component.dialog.CreateGroupDialog
-import com.chanyoung.jack.ui.viewmodel.AddLinkViewModel
+import com.chanyoung.jack.ui.viewmodel.LinkViewModel
 import com.chanyoung.jack.ui.viewmodel.networking.WebScraperViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,12 +28,12 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AddLinkActivity : JMainBasicActivity<ActivityAddLinkBinding>() {
 
-    private val addLinkViewModel: AddLinkViewModel by viewModels()
+    private val linkViewModel: LinkViewModel by viewModels()
     private val webScrapperViewModel: WebScraperViewModel by viewModels()
 
     private val createGroupDialog: CreateGroupDialog by lazy { CreateGroupDialog(::createGroup) }
 
-    private lateinit var adapter: AddLinkGroupItemAdapter
+    private lateinit var adapter: GroupItemAdapter
 
     private lateinit var clipData: String
 
@@ -63,16 +63,16 @@ class AddLinkActivity : JMainBasicActivity<ActivityAddLinkBinding>() {
     }
 
     private fun initRecyclerView() {
-        adapter = AddLinkGroupItemAdapter { groupId -> addLinkViewModel.onGroupItemSelected(groupId) }
+        adapter = GroupItemAdapter { groupId -> linkViewModel.onGroupItemSelected(groupId) }
 
         binding.addLinkGroupRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.addLinkGroupRv.adapter = adapter
 
-        addLinkViewModel.setGroupList()
+        linkViewModel.setGroupList()
 
-        addLinkViewModel.linkGroups.observe(this) { linkGroups -> adapter.setList(linkGroups) }
+        linkViewModel.linkGroups.observe(this) { linkGroups -> adapter.setList(linkGroups) }
 
-        addLinkViewModel.selectedGroupId.observe(this) { selectedGroupId ->
+        linkViewModel.selectedGroupId.observe(this) { selectedGroupId ->
             adapter.updateSelectedGroupId(selectedGroupId)
             groupId = selectedGroupId
         }
@@ -84,7 +84,7 @@ class AddLinkActivity : JMainBasicActivity<ActivityAddLinkBinding>() {
 
     private fun createGroup(groupName: String) {
         val linkGroup = LinkGroup(name =  groupName)
-        addLinkViewModel.insertGroup(linkGroup)
+        linkViewModel.insertGroup(linkGroup)
     }
 
     private fun setScrapper(url: String) {
@@ -128,10 +128,10 @@ class AddLinkActivity : JMainBasicActivity<ActivityAddLinkBinding>() {
             } else if(!WebUrlUtil.checkUrlPrefix(link)) {
                 binding.addLinkUrlInput.error = ErrorMessages.INVALID_URL
             } else {
-                addLinkViewModel.insertLink(Link(lid = 0, title = title, url = link, memo = memo, image_path = imagePath, groupId = groupId))
+                linkViewModel.insertLink(Link(lid = 0, title = title, url = link, memo = memo, image_path = imagePath, groupId = groupId))
 
-                val resultIntent = Intent()
-                setResult(Activity.RESULT_OK, resultIntent)
+//                val resultIntent = Intent()
+//                setResult(Activity.RESULT_OK, resultIntent)
                 finish()
             }
         }
@@ -157,9 +157,9 @@ class AddLinkActivity : JMainBasicActivity<ActivityAddLinkBinding>() {
 
     private fun getClipData() {
         binding.addLinkClipboard.setOnClickListener {
-            addLinkViewModel.handlerPrimaryClip(this, 100)
+            linkViewModel.handlerPrimaryClip(this, 100)
 
-            addLinkViewModel.clipData.observe(this) {newData ->
+            linkViewModel.clipData.observe(this) { newData ->
                 if(newData != binding.addLinkUrlInput.text.toString() && newData != null) {
                     binding.addLinkUrlInput.setText(newData)
                     setScrapper(newData)

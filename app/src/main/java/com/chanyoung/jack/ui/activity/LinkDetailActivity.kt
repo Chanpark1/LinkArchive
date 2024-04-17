@@ -10,13 +10,21 @@ import com.bumptech.glide.Glide
 import com.chanyoung.jack.R
 import com.chanyoung.jack.databinding.ActivityLinkDetailBinding
 import com.chanyoung.jack.ui.activity.base.JMainBasicActivity
+import com.chanyoung.jack.ui.component.dialog.LinkOptionDialog
+import com.chanyoung.jack.ui.component.dialog.RelocateLinkDialog
 import com.chanyoung.jack.ui.viewmodel.LinkDetailViewModel
+import com.chanyoung.jack.ui.viewmodel.LinkViewModel
+import com.chanyoung.jack.ui.viewmodel.fragment.LinkPagingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LinkDetailActivity : JMainBasicActivity<ActivityLinkDetailBinding>() {
 
-    private val viewModel : LinkDetailViewModel by viewModels()
+    private val linkViewModel : LinkViewModel by viewModels()
+    private val pagingViewModel : LinkPagingViewModel by viewModels()
+
+    private val linkOptionDialog : LinkOptionDialog by lazy { LinkOptionDialog(::setEditOption, ::setDeleteOption, ::setRelocateOption) }
+    private val relocateLinkDialog : RelocateLinkDialog by lazy { RelocateLinkDialog() }
 
     override fun viewBindingInflate(inflater: LayoutInflater): ActivityLinkDetailBinding = ActivityLinkDetailBinding.inflate(layoutInflater)
 
@@ -26,11 +34,13 @@ class LinkDetailActivity : JMainBasicActivity<ActivityLinkDetailBinding>() {
         binding = ActivityLinkDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.getLinkInfo(getLinkId())
+        linkViewModel.getLink(getLinkId())
 
         setupBinding()
 
         setupLinkNavigation()
+
+        setMenuButton()
     }
 
 
@@ -47,7 +57,7 @@ class LinkDetailActivity : JMainBasicActivity<ActivityLinkDetailBinding>() {
 
     private fun setupLinkNavigation() {
         binding.linkDetailCv.setOnClickListener {
-            viewModel.link.value?.let {
+            linkViewModel.link.value?.let {
                 navigateToLink(it.url)
             }
         }
@@ -55,7 +65,7 @@ class LinkDetailActivity : JMainBasicActivity<ActivityLinkDetailBinding>() {
 
     private fun setupBinding() {
         binding.apply {
-            viewModel.link.observe(this@LinkDetailActivity) {
+            linkViewModel.link.observe(this@LinkDetailActivity) {
                 loadThumbnail(linkDetailThumbnail, it.image_path)
                 linkDetailMemo.text = it.memo
                 linkDetailUrl.text = it.url
@@ -72,6 +82,29 @@ class LinkDetailActivity : JMainBasicActivity<ActivityLinkDetailBinding>() {
             .into(view)
     }
 
+    private fun setMenuButton() {
+        binding.linkDetailMenu.setOnClickListener {
+            linkOptionDialog.show(supportFragmentManager,"LinkOption")
+        }
+    }
+
+
+    private fun setEditOption(){
+        val intent = Intent(this, EditLinkActivity::class.java)
+        intent.putExtra("lid",getLinkId())
+        startActivity(intent)
+    }
+
+    private fun setDeleteOption() {
+        linkViewModel.deleteLink(getLinkId())
+        finish()
+    }
+
+    private fun setRelocateOption() {
+        relocateLinkDialog.updateLinkId(getLinkId())
+        relocateLinkDialog.show(supportFragmentManager,"Relocate Dialog")
+
+    }
 
 }
 

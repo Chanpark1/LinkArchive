@@ -20,4 +20,12 @@ interface LinkDao {
     @Transaction
     @Query("SELECT * FROM Link WHERE lid = :lid")
     suspend fun getLink(lid : Int) : Link
+
+    @Transaction
+    @Query("DELETE FROM Link WHERE lid = :lid")
+    suspend fun deleteLink(lid : Int)
+
+    @Transaction
+    @Query("UPDATE Link SET groupId = :gid WHERE lid = :lid")
+    suspend fun relocateLink(lid : Int, gid : Int)
 }

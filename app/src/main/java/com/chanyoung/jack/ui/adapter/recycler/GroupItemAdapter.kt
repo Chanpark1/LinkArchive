@@ -1,6 +1,5 @@
 package com.chanyoung.jack.ui.adapter.recycler
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.chanyoung.jack.R
@@ -9,7 +8,7 @@ import com.chanyoung.jack.databinding.ItemLinkgroupBinding
 import com.chanyoung.jmodule.adapter.JmBaseAdapter
 import com.chanyoung.jmodule.adapter.JmBaseViewHolder
 
-class AddLinkGroupItemAdapter(
+class GroupItemAdapter(
     private val selectOperation : (Int) -> Unit
     )
     : JmBaseAdapter<LinkGroup, LinkGroupItemViewHolder>() {
@@ -39,8 +38,6 @@ class LinkGroupItemViewHolder(binding : ItemLinkgroupBinding) : JmBaseViewHolder
         // 2.
         binding.root.setOnClickListener{
             selectOperation(group.gid)
-            // 여기서 0 리턴이 됨
-            Log.d("adapter", group.gid.toString())
             updateBackground(selectedGroupId)
         }
         updateBackground(selectedGroupId)

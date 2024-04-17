@@ -36,4 +36,16 @@ class LinkRepositoryImpl @Inject constructor(
             dao.getPaginatedLinks(index, loadSize)
         }
     }
+
+    override suspend fun deleteLink(lid: Int) {
+       return withContext(Dispatchers.IO) {
+           dao.deleteLink(lid)
+       }
+    }
+
+    override suspend fun relocateLink(lid: Int, gid: Int) {
+        return withContext(Dispatchers.IO) {
+            dao.relocateLink(lid, gid)
+        }
+    }
 }

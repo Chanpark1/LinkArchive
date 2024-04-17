@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AddLinkViewModel @Inject constructor(
+class LinkViewModel @Inject constructor(
     private val linkRepo : LinkRepositoryImpl,
     private val groupRepo : GroupRepositoryImpl
 ) : ViewModel() {
@@ -28,6 +28,9 @@ class AddLinkViewModel @Inject constructor(
 
     private val _linkGroups = MutableLiveData<List<LinkGroup>>()
     val linkGroups : LiveData<List<LinkGroup>> get() = _linkGroups
+
+    private val _link = MutableLiveData<Link>()
+    val link: LiveData<Link> get() = _link
 
     private val _insertGroupResult = MutableLiveData<Boolean>()
     val insertGroupResult: LiveData<Boolean> get() = _insertGroupResult
@@ -69,9 +72,28 @@ class AddLinkViewModel @Inject constructor(
         }
     }
 
+    fun getLink(lid : Int) {
+        viewModelScope.launch {
+            val link = linkRepo.getLink(lid)
+            _link.value = link
+        }
+    }
+
+    fun deleteLink(lid : Int) {
+        viewModelScope.launch {
+            linkRepo.deleteLink(lid)
+        }
+    }
+
     fun insertLink(link: Link) {
         viewModelScope.launch {
             linkRepo.insertLink(link)
+        }
+    }
+
+    fun relocateLink(lid : Int, gid : Int) {
+        viewModelScope.launch {
+            linkRepo.relocateLink(lid, gid)
         }
     }
 

@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"
+        android:padding="15dp"
         android:theme="@style/AppTheme"
         android:background="@color/white"
         tools:context=".ui.activity.LinkDetailActivity">

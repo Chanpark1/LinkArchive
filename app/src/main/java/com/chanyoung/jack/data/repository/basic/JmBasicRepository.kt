@@ -1,17 +1,16 @@
 package com.chanyoung.jack.data.repository.basic
 
-import androidx.paging.PagingData
 import com.chanyoung.jack.data.model.Link
 import com.chanyoung.jack.data.model.LinkGroup
-import java.util.concurrent.Flow
 
 interface LinkRepository {
 
     suspend fun insertLink(link: Link)
     suspend fun getAllLinks(): List<Link>
     suspend fun getPaginatedLinks(index : Int, loadSize : Int) : List<Link>
-
     suspend fun getLink(lid : Int) : Link
+    suspend fun deleteLink(lid : Int)
+    suspend fun relocateLink(lid : Int, gid : Int)
 }
 
 interface GroupRepository {

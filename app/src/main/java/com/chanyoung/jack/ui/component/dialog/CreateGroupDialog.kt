@@ -1,24 +1,20 @@
 package com.chanyoung.jack.ui.component.dialog
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.activityViewModels
 import com.chanyoung.jack.application.ErrorMessages
 import com.chanyoung.jack.databinding.DialogCreateGroupBinding
 import com.chanyoung.jack.ui.component.dialog.basic.JBasicBottomSheetDialog
-import com.chanyoung.jack.ui.viewmodel.AddLinkViewModel
+import com.chanyoung.jack.ui.viewmodel.LinkViewModel
 
 class CreateGroupDialog(
     private val onSave: (String) -> Unit
 ) : JBasicBottomSheetDialog<DialogCreateGroupBinding>() {
 
-    private val addLinkViewModel: AddLinkViewModel by activityViewModels()
+    private val linkViewModel: LinkViewModel by activityViewModels()
     override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -36,7 +32,7 @@ class CreateGroupDialog(
             }
         }
 
-        addLinkViewModel.insertGroupResult.observe(viewLifecycleOwner) { result ->
+        linkViewModel.insertGroupResult.observe(viewLifecycleOwner) { result ->
             if(result) {
                 dismiss()
             } else {
@@ -44,37 +40,4 @@ class CreateGroupDialog(
             }
         }
     }
-
-    override fun onStart() {
-        super.onStart()
-        dialog?.window?.apply {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                ViewCompat.setOnApplyWindowInsetsListener(requireDialog().window?.decorView!!) { _, insets ->
-                    val imeHeight = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
-
-                    val navigationBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
-
-                    val topPadding = binding.root.paddingTop
-
-                    val startPadding = binding.root.paddingStart
-
-                    val endPadding = binding.root.paddingEnd
-
-                    binding.root.setPadding(
-                        startPadding,
-                        topPadding,
-                        endPadding,
-                        imeHeight - navigationBarHeight
-                    )
-                    insets
-                }
-            } else {
-                setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-            }
-        }
-    }
 }
-
-
-
-

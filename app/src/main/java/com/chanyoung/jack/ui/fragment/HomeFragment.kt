@@ -8,18 +8,19 @@ import com.chanyoung.jack.databinding.FragmentHomeBinding
 import com.chanyoung.jack.ui.activity.LinkDetailActivity
 import com.chanyoung.jack.ui.adapter.recycler.AllLinkListAdapter
 import com.chanyoung.jack.ui.fragment.basic.JBasicFragment
-import com.chanyoung.jack.ui.viewmodel.fragment.HomeFragmentViewModel
+import com.chanyoung.jack.ui.viewmodel.fragment.LinkPagingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 @AndroidEntryPoint
 class HomeFragment @Inject constructor() :
     JBasicFragment<FragmentHomeBinding>() {
 
-    private val viewModel : HomeFragmentViewModel by activityViewModels()
+    private val viewModel : LinkPagingViewModel by activityViewModels()
 
     private lateinit var adapter : AllLinkListAdapter
     override fun layoutId(): Int { return R.layout.fragment_home }
     override fun onCreateView() {
+
         initRecyclerView()
     }
 
@@ -40,5 +41,8 @@ class HomeFragment @Inject constructor() :
         startActivity(intent)
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshData()
+    }
 }

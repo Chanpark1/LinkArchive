@@ -8,12 +8,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeFragmentViewModel @Inject constructor(
+class LinkPagingViewModel @Inject constructor(
     private val pagingSource: ListLinkPagingSource
 ) : ViewModel() {
+
     private companion object {
         private const val PAGE_SIZE = 5
-        private const val INITIAL_LOAD_SIZE = 5
+        private const val INITIAL_LOAD_SIZE = PAGE_SIZE * 3
         private const val PREFETCH_DISTANCE = 3
         private const val ENABLE_PLACE_HOLDERS = false
     }
@@ -28,11 +29,9 @@ class HomeFragmentViewModel @Inject constructor(
     private val _links = MutableLiveData<PagingData<Link>>()
     val links: LiveData<PagingData<Link>> get() = _links
 
-    init {
-        loadData()
-    }
 
     private fun loadData() {
+
         val pager = Pager(pagingConfig) { pagingSource }
 
         pager.flow
