@@ -48,4 +48,16 @@ class LinkRepositoryImpl @Inject constructor(
             dao.relocateLink(lid, gid)
         }
     }
+
+    override suspend fun updateLink(
+        lid: Int,
+        title: String,
+        url: String,
+        memo: String,
+        image_path: String?
+    ) {
+        return withContext(Dispatchers.IO) {
+            dao.updateLink(lid, title, url, memo, image_path)
+        }
+    }
 }

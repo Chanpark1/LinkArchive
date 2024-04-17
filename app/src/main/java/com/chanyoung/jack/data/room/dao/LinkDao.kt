@@ -28,4 +28,8 @@ interface LinkDao {
     @Transaction
     @Query("UPDATE Link SET groupId = :gid WHERE lid = :lid")
     suspend fun relocateLink(lid : Int, gid : Int)
+
+    @Transaction
+    @Query("UPDATE Link SET title = :title, url = :url, memo = :memo, imagePath = :image_path WHERE lid = :lid")
+    suspend fun updateLink(lid : Int, title : String, url : String, memo : String, image_path : String?)
 }

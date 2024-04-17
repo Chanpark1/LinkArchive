@@ -1,18 +1,15 @@
 package com.chanyoung.jack.ui.activity
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.chanyoung.jack.R
 import com.chanyoung.jack.databinding.ActivityMainBinding
 import com.chanyoung.jack.ui.activity.base.JMainBasicActivity
 import com.chanyoung.jack.ui.component.navigation.NavigationController
-import com.chanyoung.jack.ui.viewmodel.MainViewModel
-import com.chanyoung.jack.ui.viewmodel.fragment.LinkPagingViewModel
+import com.chanyoung.jack.ui.viewmodel.GroupViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,8 +18,7 @@ class MainActivity :
 
     private lateinit var navController: NavigationController
 
-    private val viewModel: MainViewModel by viewModels()
-    private val pagingViewModel : LinkPagingViewModel by viewModels()
+    private val groupViewModel: GroupViewModel by viewModels()
 
     override fun viewBindingInflate(inflater: LayoutInflater): ActivityMainBinding =
         ActivityMainBinding.inflate(layoutInflater)
@@ -32,7 +28,7 @@ class MainActivity :
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.createDefaultLinkGroup()
+        groupViewModel.createDefaultLinkGroup()
         setBottomNav()
         setAddLinkButton()
     }
@@ -52,13 +48,4 @@ class MainActivity :
             startActivity(intent)
         }
     }
-
-//    private val addLinkLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-//        if(result.resultCode == Activity.RESULT_OK) {
-//            pagingViewModel.refreshData()
-//        }
-//    }
-
-
-
 }

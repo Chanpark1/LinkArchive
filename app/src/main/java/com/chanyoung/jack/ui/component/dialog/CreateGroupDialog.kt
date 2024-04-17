@@ -8,13 +8,13 @@ import androidx.fragment.app.activityViewModels
 import com.chanyoung.jack.application.ErrorMessages
 import com.chanyoung.jack.databinding.DialogCreateGroupBinding
 import com.chanyoung.jack.ui.component.dialog.basic.JBasicBottomSheetDialog
-import com.chanyoung.jack.ui.viewmodel.LinkViewModel
+import com.chanyoung.jack.ui.viewmodel.GroupViewModel
 
 class CreateGroupDialog(
     private val onSave: (String) -> Unit
 ) : JBasicBottomSheetDialog<DialogCreateGroupBinding>() {
 
-    private val linkViewModel: LinkViewModel by activityViewModels()
+    private val groupViewModel: GroupViewModel by activityViewModels()
     override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -32,7 +32,7 @@ class CreateGroupDialog(
             }
         }
 
-        linkViewModel.insertGroupResult.observe(viewLifecycleOwner) { result ->
+        groupViewModel.insertGroupResult.observe(viewLifecycleOwner) { result ->
             if(result) {
                 dismiss()
             } else {

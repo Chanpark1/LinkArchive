@@ -11,6 +11,7 @@ import com.chanyoung.jack.databinding.DialogRelocateLinkGroupBinding
 import com.chanyoung.jack.ui.adapter.recycler.GroupItemAdapter
 import com.chanyoung.jack.ui.component.dialog.basic.JBasicBottomSheetDialog
 import com.chanyoung.jack.ui.viewmodel.LinkViewModel
+import com.chanyoung.jack.ui.viewmodel.GroupViewModel
 import com.google.android.material.snackbar.Snackbar
 
 class RelocateLinkDialog: JBasicBottomSheetDialog<DialogRelocateLinkGroupBinding>() {
@@ -18,6 +19,7 @@ class RelocateLinkDialog: JBasicBottomSheetDialog<DialogRelocateLinkGroupBinding
     private lateinit var adapter: GroupItemAdapter
 
     private val linkViewModel : LinkViewModel by activityViewModels()
+    private val groupViewModel : GroupViewModel by activityViewModels()
 
     private var groupId: Int = 0
 
@@ -36,16 +38,16 @@ class RelocateLinkDialog: JBasicBottomSheetDialog<DialogRelocateLinkGroupBinding
     }
 
     private fun initRecyclerview() {
-        adapter = GroupItemAdapter {groupId -> linkViewModel.onGroupItemSelected(groupId) }
+        adapter = GroupItemAdapter {groupId -> groupViewModel.onGroupItemSelected(groupId) }
 
         binding.dialogRelocateRv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.dialogRelocateRv.adapter = adapter
 
-        linkViewModel.setGroupList()
+        groupViewModel.setGroupList()
 
-        linkViewModel.linkGroups.observe(viewLifecycleOwner) { linkGroups -> adapter.setList(linkGroups)  }
+        groupViewModel.linkGroups.observe(viewLifecycleOwner) { linkGroups -> adapter.setList(linkGroups)  }
 
-        linkViewModel.selectedGroupId.observe(viewLifecycleOwner) { selectedGroupId ->
+        groupViewModel.selectedGroupId.observe(viewLifecycleOwner) { selectedGroupId ->
             adapter.updateSelectedGroupId(selectedGroupId)
             groupId = selectedGroupId
 

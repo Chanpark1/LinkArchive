@@ -1,7 +1,5 @@
 package com.chanyoung.jack.ui.activity
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -20,7 +18,9 @@ import com.chanyoung.jack.databinding.ActivityAddLinkBinding
 import com.chanyoung.jack.ui.activity.base.JMainBasicActivity
 import com.chanyoung.jack.ui.adapter.recycler.GroupItemAdapter
 import com.chanyoung.jack.ui.component.dialog.CreateGroupDialog
+import com.chanyoung.jack.ui.viewmodel.ClipBoardViewModel
 import com.chanyoung.jack.ui.viewmodel.LinkViewModel
+import com.chanyoung.jack.ui.viewmodel.GroupViewModel
 import com.chanyoung.jack.ui.viewmodel.networking.WebScraperViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,7 +29,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class AddLinkActivity : JMainBasicActivity<ActivityAddLinkBinding>() {
 
     private val linkViewModel: LinkViewModel by viewModels()
+    private val groupViewModel : GroupViewModel by viewModels()
     private val webScrapperViewModel: WebScraperViewModel by viewModels()
+    private val clipBoardViewModel: ClipBoardViewModel by viewModels()
 
     private val createGroupDialog: CreateGroupDialog by lazy { CreateGroupDialog(::createGroup) }
 
@@ -63,16 +65,16 @@ class AddLinkActivity : JMainBasicActivity<ActivityAddLinkBinding>() {
     }
 
     private fun initRecyclerView() {
-        adapter = GroupItemAdapter { groupId -> linkViewModel.onGroupItemSelected(groupId) }
+        adapter = GroupItemAdapter { groupId -> groupViewModel.onGroupItemSelected(groupId) }
 
         binding.addLinkGroupRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.addLinkGroupRv.adapter = adapter
 
-        linkViewModel.setGroupList()
+        groupViewModel.setGroupList()
 
-        linkViewModel.linkGroups.observe(this) { linkGroups -> adapter.setList(linkGroups) }
+        groupViewModel.linkGroups.observe(this) { linkGroups -> adapter.setList(linkGroups) }
 
-        linkViewModel.selectedGroupId.observe(this) { selectedGroupId ->
+        groupViewModel.selectedGroupId.observe(this) { selectedGroupId ->
             adapter.updateSelectedGroupId(selectedGroupId)
             groupId = selectedGroupId
         }
@@ -84,7 +86,7 @@ class AddLinkActivity : JMainBasicActivity<ActivityAddLinkBinding>() {
 
     private fun createGroup(groupName: String) {
         val linkGroup = LinkGroup(name =  groupName)
-        linkViewModel.insertGroup(linkGroup)
+        groupViewModel.insertGroup(linkGroup)
     }
 
     private fun setScrapper(url: String) {
@@ -129,9 +131,6 @@ class AddLinkActivity : JMainBasicActivity<ActivityAddLinkBinding>() {
                 binding.addLinkUrlInput.error = ErrorMessages.INVALID_URL
             } else {
                 linkViewModel.insertLink(Link(lid = 0, title = title, url = link, memo = memo, image_path = imagePath, groupId = groupId))
-
-//                val resultIntent = Intent()
-//                setResult(Activity.RESULT_OK, resultIntent)
                 finish()
             }
         }
@@ -157,9 +156,9 @@ class AddLinkActivity : JMainBasicActivity<ActivityAddLinkBinding>() {
 
     private fun getClipData() {
         binding.addLinkClipboard.setOnClickListener {
-            linkViewModel.handlerPrimaryClip(this, 100)
+            clipBoardViewModel.handlerPrimaryClip(this, 100)
 
-            linkViewModel.clipData.observe(this) { newData ->
+            clipBoardViewModel.clipData.observe(this) { newData ->
                 if(newData != binding.addLinkUrlInput.text.toString() && newData != null) {
                     binding.addLinkUrlInput.setText(newData)
                     setScrapper(newData)

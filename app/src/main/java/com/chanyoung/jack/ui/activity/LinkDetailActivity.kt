@@ -12,22 +12,18 @@ import com.chanyoung.jack.databinding.ActivityLinkDetailBinding
 import com.chanyoung.jack.ui.activity.base.JMainBasicActivity
 import com.chanyoung.jack.ui.component.dialog.LinkOptionDialog
 import com.chanyoung.jack.ui.component.dialog.RelocateLinkDialog
-import com.chanyoung.jack.ui.viewmodel.LinkDetailViewModel
 import com.chanyoung.jack.ui.viewmodel.LinkViewModel
-import com.chanyoung.jack.ui.viewmodel.fragment.LinkPagingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LinkDetailActivity : JMainBasicActivity<ActivityLinkDetailBinding>() {
 
     private val linkViewModel : LinkViewModel by viewModels()
-    private val pagingViewModel : LinkPagingViewModel by viewModels()
 
     private val linkOptionDialog : LinkOptionDialog by lazy { LinkOptionDialog(::setEditOption, ::setDeleteOption, ::setRelocateOption) }
     private val relocateLinkDialog : RelocateLinkDialog by lazy { RelocateLinkDialog() }
 
     override fun viewBindingInflate(inflater: LayoutInflater): ActivityLinkDetailBinding = ActivityLinkDetailBinding.inflate(layoutInflater)
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,10 +85,11 @@ class LinkDetailActivity : JMainBasicActivity<ActivityLinkDetailBinding>() {
     }
 
 
-    private fun setEditOption(){
+    private fun setEditOption() {
         val intent = Intent(this, EditLinkActivity::class.java)
         intent.putExtra("lid",getLinkId())
         startActivity(intent)
+        finish()
     }
 
     private fun setDeleteOption() {
@@ -103,7 +100,6 @@ class LinkDetailActivity : JMainBasicActivity<ActivityLinkDetailBinding>() {
     private fun setRelocateOption() {
         relocateLinkDialog.updateLinkId(getLinkId())
         relocateLinkDialog.show(supportFragmentManager,"Relocate Dialog")
-
     }
 
 }
