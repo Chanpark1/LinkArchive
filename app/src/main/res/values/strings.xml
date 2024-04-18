@@ -31,6 +31,9 @@
     <string name="new_link">New link</string>
     <string name="edit_link">Edit Link</string>
     <string name="link_option">Link Option</string>
+    <string name="group_option">Group Option</string>
+    <string name="group_option_rename">Rename Group</string>
+    <string name="group_option_delete">Delete Group</string>
     <string name="option_edit">Edit Link</string>
     <string name="option_delete">Delete Link</string>
     <string name="option_relocate">Relocate Link</string>

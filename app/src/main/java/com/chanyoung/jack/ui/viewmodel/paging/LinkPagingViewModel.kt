@@ -1,4 +1,4 @@
-package com.chanyoung.jack.ui.viewmodel.fragment
+package com.chanyoung.jack.ui.viewmodel.paging
 
 import androidx.lifecycle.*
 import androidx.paging.*
@@ -28,7 +28,6 @@ class LinkPagingViewModel @Inject constructor(
 
     private val _links = MutableLiveData<PagingData<Link>>()
     val links: LiveData<PagingData<Link>> get() = _links
-
 
     private fun loadData() {
 

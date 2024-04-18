@@ -25,6 +25,7 @@ class RelocateLinkDialog: JBasicBottomSheetDialog<DialogRelocateLinkGroupBinding
 
     private var linkId: Int = 0
 
+
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?
     ): DialogRelocateLinkGroupBinding = DialogRelocateLinkGroupBinding.inflate(inflater, container, false)
 
@@ -43,7 +44,7 @@ class RelocateLinkDialog: JBasicBottomSheetDialog<DialogRelocateLinkGroupBinding
         binding.dialogRelocateRv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.dialogRelocateRv.adapter = adapter
 
-        groupViewModel.setGroupList()
+        groupViewModel.setGroupListExcept(linkId)
 
         groupViewModel.linkGroups.observe(viewLifecycleOwner) { linkGroups -> adapter.setList(linkGroups)  }
 

@@ -3,6 +3,7 @@ package com.chanyoung.jack.ui.activity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.viewModels
@@ -39,7 +40,7 @@ class AddLinkActivity : JMainBasicActivity<ActivityAddLinkBinding>() {
 
     private lateinit var clipData: String
 
-    private var groupId: Int? = null
+    private var groupId: Int = 0
 
     private var imagePath: String? = null
 
@@ -81,7 +82,10 @@ class AddLinkActivity : JMainBasicActivity<ActivityAddLinkBinding>() {
     }
 
     private fun setCreateGroupBottomSheet() {
-        binding.addLinkGroupBtn.setOnClickListener { createGroupDialog.show(supportFragmentManager, "CreateGroupFragment") }
+        binding.addLinkGroupBtn.setOnClickListener {
+            createGroupDialog.show(supportFragmentManager, "CreateGroupFragment")
+
+        }
     }
 
     private fun createGroup(groupName: String) {
@@ -121,7 +125,7 @@ class AddLinkActivity : JMainBasicActivity<ActivityAddLinkBinding>() {
             val link = binding.addLinkUrlInput.text.toString()
             val memo = binding.addLinkMemoInput.text.toString()
 
-            if(groupId == null) {
+            if(groupId == 0) {
                 Snackbar.make(binding.root, ErrorMessages.GROUP_EMPTY, Snackbar.LENGTH_SHORT).show()
             } else if (title.isEmpty()) {
                 binding.addLinkTitleInput.error = ErrorMessages.TITLE_EMPTY

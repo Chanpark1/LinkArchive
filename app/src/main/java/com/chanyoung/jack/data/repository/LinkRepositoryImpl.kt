@@ -3,6 +3,7 @@ package com.chanyoung.jack.data.repository
 import com.chanyoung.jack.data.model.Link
 import com.chanyoung.jack.data.repository.basic.LinkRepository
 import com.chanyoung.jack.data.room.dao.LinkDao
+import com.chanyoung.jack.data.room.dao.LinkGroupDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -12,40 +13,51 @@ import javax.inject.Singleton
 
 @Singleton
 class LinkRepositoryImpl @Inject constructor(
-    private val dao: LinkDao
+    private val linkDao: LinkDao,
+    private val groupDao : LinkGroupDao
 ) : LinkRepository {
     override suspend fun insertLink(link: Link) {
         CoroutineScope(Dispatchers.IO).launch {
-            dao.insertLink(link)
+            linkDao.insertLink(link)
+            groupDao.updateLinkCount(link.groupId)
         }
     }
 
     override suspend fun getAllLinks(): List<Link> {
         return withContext(Dispatchers.IO) {
-            dao.getAllLinks()
+            linkDao.getAllLinks()
         }
     }
 
     override suspend fun getLink(lid: Int): Link {
         return withContext(Dispatchers.IO) {
-            dao.getLink(lid)
+            linkDao.getLink(lid)
+        }
+    }
+
+    override suspend fun getLinksInGroup(gid: Int): List<Link> {
+        return withContext(Dispatchers.IO) {
+            linkDao.getLinksInGroup(gid)
         }
     }
     override suspend fun getPaginatedLinks(index : Int, loadSize : Int): List<Link> {
         return withContext(Dispatchers.IO) {
-            dao.getPaginatedLinks(index, loadSize)
+            linkDao.getPaginatedLinks(index, loadSize)
         }
     }
 
-    override suspend fun deleteLink(lid: Int) {
+    override suspend fun deleteLink(link : Link) {
        return withContext(Dispatchers.IO) {
-           dao.deleteLink(lid)
+           linkDao.deleteLink(link)
+           groupDao.updateLinkCount(link.groupId)
        }
     }
 
-    override suspend fun relocateLink(lid: Int, gid: Int) {
+    override suspend fun relocateLink(lid: Int, oldGid: Int, newGid : Int) {
         return withContext(Dispatchers.IO) {
-            dao.relocateLink(lid, gid)
+            linkDao.relocateLink(lid, newGid)
+            groupDao.updateLinkCount(oldGid)
+            groupDao.updateLinkCount(newGid)
         }
     }
 
@@ -57,7 +69,8 @@ class LinkRepositoryImpl @Inject constructor(
         image_path: String?
     ) {
         return withContext(Dispatchers.IO) {
-            dao.updateLink(lid, title, url, memo, image_path)
+            linkDao.updateLink(lid, title, url, memo, image_path)
         }
     }
+
 }

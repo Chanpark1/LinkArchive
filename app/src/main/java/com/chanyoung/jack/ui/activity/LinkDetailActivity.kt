@@ -43,7 +43,6 @@ class LinkDetailActivity : JMainBasicActivity<ActivityLinkDetailBinding>() {
     private fun getLinkId() : Int {
         return intent.getIntExtra("lid",0)
     }
-
     private fun navigateToLink(url : String?) {
         url?.let {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
@@ -93,7 +92,7 @@ class LinkDetailActivity : JMainBasicActivity<ActivityLinkDetailBinding>() {
     }
 
     private fun setDeleteOption() {
-        linkViewModel.deleteLink(getLinkId())
+        linkViewModel.deleteLinkById(getLinkId())
         finish()
     }
 

@@ -25,9 +25,12 @@ class LinkViewModel @Inject constructor(
         }
     }
 
-    fun deleteLink(lid: Int) {
+    fun deleteLinkById(lid: Int) {
         viewModelScope.launch {
-            linkRepo.deleteLink(lid)
+            val link = linkRepo.getLink(lid)
+            link.let {
+                linkRepo.deleteLink(link)
+            }
         }
     }
 
@@ -39,7 +42,10 @@ class LinkViewModel @Inject constructor(
 
     fun relocateLink(lid: Int, gid: Int) {
         viewModelScope.launch {
-            linkRepo.relocateLink(lid, gid)
+            val link = linkRepo.getLink(lid)
+            link.let {
+                linkRepo.relocateLink(lid, link.groupId, gid)
+            }
         }
     }
 

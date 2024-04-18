@@ -1,6 +1,5 @@
 package com.chanyoung.jack.data.repository
 
-import android.util.Log
 import com.chanyoung.jack.data.model.LinkGroup
 import com.chanyoung.jack.data.repository.basic.GroupRepository
 import com.chanyoung.jack.data.room.dao.LinkGroupDao
@@ -14,7 +13,7 @@ class GroupRepositoryImpl @Inject constructor(
     private val dao: LinkGroupDao
 ) : GroupRepository {
 
-    companion object {
+    private companion object {
         private const val DEFAULT_GROUP_NAME = "New Group"
         private const val DEFAULT_GROUP_ID = 0
     }
@@ -25,9 +24,27 @@ class GroupRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getLinkGroup(gid: Int): LinkGroup {
+        return withContext(Dispatchers.IO) {
+            dao.getLinkGroup(gid)
+        }
+    }
+
     override suspend fun getAllGroup(): List<LinkGroup> {
         return withContext(Dispatchers.IO) {
             dao.getAllGroup()
+        }
+    }
+
+    override suspend fun getAllGroupExcept(gid: Int): List<LinkGroup> {
+        return withContext(Dispatchers.IO) {
+            dao.getAllGroupExcept(gid)
+        }
+    }
+
+    override suspend fun deleteGroup(group: LinkGroup) {
+        return withContext(Dispatchers.IO) {
+            dao.deleteGroup(group)
         }
     }
 
@@ -48,14 +65,11 @@ class GroupRepositoryImpl @Inject constructor(
         if (!hasUserCreatedGroup()) {
             val defaultGroup = LinkGroup(DEFAULT_GROUP_ID, DEFAULT_GROUP_NAME)
             dao.insertGroup(defaultGroup)
-            Log.d("GROUP REPO", "DEFAULT INSERT GROUP CALLED")
         }
     }
     override suspend fun checkDuplicateGroup(groupName : String) : Int{
-        Log.d("checkDuplicateGroup", dao.checkDuplicateGroup(groupName).toString() )
         return withContext(Dispatchers.IO) {
             dao.checkDuplicateGroup(groupName)
-
         }
     }
 
@@ -64,4 +78,12 @@ class GroupRepositoryImpl @Inject constructor(
             dao.getGroupId(groupName)
         }
     }
+
+    override suspend fun getPaginatedGroups(index: Int, loadSize: Int): List<LinkGroup> {
+        return withContext(Dispatchers.IO) {
+            dao.getPaginatedGroups(index, loadSize)
+        }
+    }
+
+
 }

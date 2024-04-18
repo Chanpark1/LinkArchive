@@ -9,20 +9,25 @@ interface LinkRepository {
     suspend fun getAllLinks(): List<Link>
     suspend fun getPaginatedLinks(index : Int, loadSize : Int) : List<Link>
     suspend fun getLink(lid : Int) : Link
-    suspend fun deleteLink(lid : Int)
-    suspend fun relocateLink(lid : Int, gid : Int)
+    suspend fun getLinksInGroup(gid : Int): List<Link>
+    suspend fun deleteLink(link : Link)
+    suspend fun relocateLink(lid : Int, oldGid : Int, newGid : Int)
     suspend fun updateLink(lid : Int, title : String, url : String, memo : String, image_path : String?)
 }
 
 interface GroupRepository {
 
     suspend fun insertGroup(group: LinkGroup)
+    suspend fun getLinkGroup(gid : Int) : LinkGroup
     suspend fun getAllGroup() : List<LinkGroup>
+    suspend fun getAllGroupExcept(gid : Int) : List<LinkGroup>
     suspend fun hasUserCreatedGroup(): Boolean
     suspend fun getGroupCount()
     suspend fun createDefaultGroup()
     suspend fun checkDuplicateGroup(groupName : String) : Int
     suspend fun getGroupId(groupName : String) : Int
+    suspend fun getPaginatedGroups(index : Int, loadSize: Int) : List<LinkGroup>
+    suspend fun deleteGroup(group : LinkGroup)
 
 
 }

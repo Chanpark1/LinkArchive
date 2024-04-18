@@ -8,7 +8,7 @@ import com.chanyoung.jack.databinding.FragmentHomeBinding
 import com.chanyoung.jack.ui.activity.LinkDetailActivity
 import com.chanyoung.jack.ui.adapter.recycler.AllLinkListAdapter
 import com.chanyoung.jack.ui.fragment.basic.JBasicFragment
-import com.chanyoung.jack.ui.viewmodel.fragment.LinkPagingViewModel
+import com.chanyoung.jack.ui.viewmodel.paging.LinkPagingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 @AndroidEntryPoint

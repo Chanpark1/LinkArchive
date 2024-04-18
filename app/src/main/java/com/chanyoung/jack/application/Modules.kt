@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.chanyoung.jack.data.repository.GroupRepositoryImpl
 import com.chanyoung.jack.data.repository.LinkRepositoryImpl
 import com.chanyoung.jack.data.repository.networking.WebScraperRepository
+import com.chanyoung.jack.data.repository.pagination.ListGroupPagingSource
 import com.chanyoung.jack.data.repository.pagination.ListLinkPagingSource
 import com.chanyoung.jack.data.room.dao.LinkDao
 import com.chanyoung.jack.data.room.dao.LinkGroupDao
@@ -29,22 +30,23 @@ class DatabaseModules {
             context,
             JDatabase::class.java,
             "link_db"
-        ).fallbackToDestructiveMigration().build()
+        ).fallbackToDestructiveMigration()
+            .build()
 
-    // Link
     @Provides
     fun provideLinkDao(db: JDatabase): LinkDao = db.getLinkDao()
 
     @Provides
-    fun provideLinkRepo(linkDao: LinkDao): LinkRepositoryImpl = LinkRepositoryImpl(linkDao)
+    fun provideLinkRepo(linkDao: LinkDao, groupDao: LinkGroupDao): LinkRepositoryImpl =
+        LinkRepositoryImpl(linkDao, groupDao)
 
 
-    // Group
     @Provides
     fun provideGroupDao(db: JDatabase): LinkGroupDao = db.getGroupDao()
 
     @Provides
-    fun provideGroupRepo(groupDao: LinkGroupDao): GroupRepositoryImpl = GroupRepositoryImpl(groupDao)
+    fun provideGroupRepo(groupDao: LinkGroupDao): GroupRepositoryImpl =
+        GroupRepositoryImpl(groupDao)
 }
 
 @Module
@@ -52,11 +54,12 @@ class DatabaseModules {
 class NetworkModule {
     @Provides
     @Singleton
-    fun provideWebScrapperRepo(okHttpClient: OkHttpClient) : WebScraperRepository = WebScraperRepository(okHttpClient)
+    fun provideWebScrapperRepo(okHttpClient: OkHttpClient): WebScraperRepository =
+        WebScraperRepository(okHttpClient)
 
     @Provides
     @Singleton
-    fun provideOkHttpClient() : OkHttpClient {
+    fun provideOkHttpClient(): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
@@ -75,5 +78,11 @@ class NetworkModule {
 class OtherModules {
     @Provides
     @Singleton
-    fun providePagingSource(linkRepo : LinkRepositoryImpl) : ListLinkPagingSource = ListLinkPagingSource(linkRepo)
+    fun provideLinkPagingSource(linkRepo: LinkRepositoryImpl): ListLinkPagingSource =
+        ListLinkPagingSource(linkRepo)
+
+    @Provides
+    @Singleton
+    fun provideGroupPagingSource(groupRepo: GroupRepositoryImpl): ListGroupPagingSource =
+        ListGroupPagingSource(groupRepo)
 }

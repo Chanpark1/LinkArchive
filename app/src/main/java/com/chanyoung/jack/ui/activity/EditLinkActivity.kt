@@ -86,6 +86,7 @@ class EditLinkActivity : JMainBasicActivity<ActivityEditLinkBinding>() {
                 binding.editLinkUrlInput.error = ErrorMessages.INVALID_URL
             } else {
                 linkViewModel.editLink(getLinkId(), title, url, memo, imagePath)
+
                 val intent = Intent(this, LinkDetailActivity::class.java)
                 intent.putExtra("lid", getLinkId())
                 startActivity(intent)

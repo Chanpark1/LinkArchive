@@ -6,12 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chanyoung.jack.data.model.LinkGroup
 import com.chanyoung.jack.data.repository.GroupRepositoryImpl
+import com.chanyoung.jack.data.repository.LinkRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class GroupViewModel @Inject constructor(
+    private val linkRepo : LinkRepositoryImpl,
     private val groupRepo : GroupRepositoryImpl
 ) : ViewModel() {
 
@@ -24,8 +26,30 @@ class GroupViewModel @Inject constructor(
     private val _linkGroups = MutableLiveData<List<LinkGroup>>()
     val linkGroups : LiveData<List<LinkGroup>> get() = _linkGroups
 
+    fun deleteGroup(gid : Int) {
+        viewModelScope.launch {
+            val group = groupRepo.getLinkGroup(gid)
 
-    fun onGroupItemSelected(groupId : Int) { _selectedGroupId.value = groupId }
+            val linksInGroup =  linkRepo.getLinksInGroup(gid)
+
+            for (link in linksInGroup) {
+                linkRepo.deleteLink(link)
+            }
+            groupRepo.deleteGroup(group)
+        }
+    }
+
+    fun onGroupItemSelected(groupId : Int) {
+        _selectedGroupId.value = groupId
+    }
+
+    fun setGroupListExcept(lid : Int) {
+        viewModelScope.launch {
+            val link = linkRepo.getLink(lid)
+            val groups = groupRepo.getAllGroupExcept(link.groupId)
+            _linkGroups.value = groups
+        }
+    }
 
     fun setGroupList() {
         viewModelScope.launch {

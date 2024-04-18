@@ -35,7 +35,7 @@ class LinkGroupItemViewHolder(binding : ItemLinkgroupBinding) : JmBaseViewHolder
 
     fun setItem(group : LinkGroup, selectOperation: (Int) -> Unit, selectedGroupId: Int) {
         binding.linkGroup = group
-        // 2.
+        
         binding.root.setOnClickListener{
             selectOperation(group.gid)
             updateBackground(selectedGroupId)

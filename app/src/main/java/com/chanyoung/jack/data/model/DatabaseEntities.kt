@@ -17,7 +17,7 @@ data class Link(
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "url") val url: String,
     @ColumnInfo(name = "memo") val memo: String,
-    @ColumnInfo(name = "groupId") val groupId: Int? = null,
+    @ColumnInfo(name = "gid") val groupId: Int = 0,
     @ColumnInfo(name = "imagePath") val image_path : String? = null
 )
 
@@ -25,7 +25,8 @@ data class Link(
 @Entity
 data class LinkGroup(
     @PrimaryKey(autoGenerate = true) val gid: Int = 0,
-    @ColumnInfo(name = "name") val name: String
+    @ColumnInfo(name = "name") val name: String,
+    @ColumnInfo(name = "linkCount") val linkCount : Int = 0
 )
 
 

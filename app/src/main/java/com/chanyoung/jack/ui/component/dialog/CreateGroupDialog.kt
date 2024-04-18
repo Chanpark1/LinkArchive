@@ -27,15 +27,15 @@ class CreateGroupDialog(
         binding.dialogCreateBtn.setOnClickListener {
             if(binding.dialogCreateTitleInput.text.toString() != "") {
                 onSave(binding.dialogCreateTitleInput.text.toString())
+                binding.dialogCreateTitleInput.setText("")
+                dismiss()
             } else {
                 binding.dialogCreateTitleInput.error = ErrorMessages.TITLE_EMPTY
             }
         }
 
         groupViewModel.insertGroupResult.observe(viewLifecycleOwner) { result ->
-            if(result) {
-                dismiss()
-            } else {
+            if(!result){
                 binding.dialogCreateTitleInput.error = ErrorMessages.GROUP_EXISTS
             }
         }
