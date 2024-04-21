@@ -1,6 +1,5 @@
-package com.chanyoung.jack.data.repository.networking
+package com.chanyoung.jack.data.web
 
-import android.widget.Switch
 import com.chanyoung.jack.application.WebUrlUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -10,7 +9,7 @@ import org.jsoup.Jsoup
 import java.io.IOException
 import javax.inject.Inject
 
-class WebScraperRepository @Inject constructor(
+class WebScraper @Inject constructor(
     private val okHttpClient: OkHttpClient
 ) {
     private val _query = "meta[property^=og:]"

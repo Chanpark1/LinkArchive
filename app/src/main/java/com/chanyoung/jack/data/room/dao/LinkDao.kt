@@ -24,14 +24,16 @@ interface LinkDao {
     suspend fun getPaginatedLinks(index : Int, loadSize : Int): List<Link>
 
     @Transaction
+    @Query("SELECT * FROM Link WHERE gid = :gid ORDER BY lid DESC LIMIT :loadSize OFFSET :index * :loadSize")
+    suspend fun getPaginatedLinksByGroupId(index : Int, loadSize: Int, gid : Int) : List<Link>
+
+    @Transaction
     @Query("SELECT * FROM Link WHERE lid = :lid")
     suspend fun getLink(lid : Int) : Link
 
     @Transaction
     @Query("SELECT * FROM Link Where gid = :gid")
     suspend fun getLinksInGroup(gid : Int) : List<Link>
-
-
 
     @Transaction
     @Query("UPDATE Link SET gid = :gid WHERE lid = :lid")
@@ -40,5 +42,9 @@ interface LinkDao {
     @Transaction
     @Query("UPDATE Link SET title = :title, url = :url, memo = :memo, imagePath = :image_path WHERE lid = :lid")
     suspend fun updateLink(lid : Int, title : String, url : String, memo : String, image_path : String?)
+
+    @Transaction
+    @Query("SELECT * FROM Link WHERE gid = :gid AND title LIKE '%' || :query || '%'")
+    suspend fun searchLinkByGroupId(gid : Int, query : String) : List<Link>
 
 }

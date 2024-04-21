@@ -27,8 +27,8 @@ class EditLinkActivity : JMainBasicActivity<ActivityEditLinkBinding>() {
     private val clipBoardViewModel: ClipBoardViewModel by viewModels()
     private val webScrapperViewModel : WebScraperViewModel by viewModels()
 
-    private lateinit var clipData: String
-    private lateinit var imagePath: String
+    private var clipData: String = ""
+    private  var imagePath: String = ""
 
     override fun viewBindingInflate(inflater: LayoutInflater): ActivityEditLinkBinding = ActivityEditLinkBinding.inflate(layoutInflater)
 
@@ -59,6 +59,8 @@ class EditLinkActivity : JMainBasicActivity<ActivityEditLinkBinding>() {
                 binding.editLinkTitleInput.setText(link.title)
                 binding.editLinkUrlInput.setText(link.url)
                 binding.editLinkMemoInput.setText(link.memo)
+
+                imagePath = link.image_path.toString()
             }
         }
 

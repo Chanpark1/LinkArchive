@@ -1,13 +1,13 @@
 package com.chanyoung.jack.ui.fragment
 
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
+import android.content.Intent
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chanyoung.jack.R
 import com.chanyoung.jack.databinding.FragmentLibraryBinding
+import com.chanyoung.jack.ui.activity.GroupDetailActivity
 import com.chanyoung.jack.ui.adapter.recycler.AllGroupListAdapter
+import com.chanyoung.jack.ui.component.dialog.EditGroupDialog
 import com.chanyoung.jack.ui.component.dialog.GroupOptionDialog
 import com.chanyoung.jack.ui.fragment.basic.JBasicFragment
 import com.chanyoung.jack.ui.viewmodel.GroupViewModel
@@ -32,11 +32,13 @@ class LibraryFragment @Inject constructor() : JBasicFragment<FragmentLibraryBind
         )
     }
 
+    private val editGroupDialog: EditGroupDialog by lazy { EditGroupDialog() }
+
     override fun layoutId(): Int = R.layout.fragment_library
     override fun onCreateView() {
         initRecyclerView()
 
-        updateGroupId()
+        setupObserver()
     }
 
     override fun initRecyclerView() {
@@ -48,19 +50,36 @@ class LibraryFragment @Inject constructor() : JBasicFragment<FragmentLibraryBind
         binding.fragLibRv.layoutManager = LinearLayoutManager(requireContext())
         binding.fragLibRv.adapter = adapter
 
-        pagingViewModel.groups.observe(viewLifecycleOwner) { groups ->
+        pagingViewModel.items.observe(viewLifecycleOwner) { groups ->
             adapter.submitData(viewLifecycleOwner.lifecycle, groups)
         }
     }
 
-    private fun updateGroupId() {
+    private fun setupObserver() {
         groupViewModel.selectedGroupId.observe(viewLifecycleOwner) {groupId ->
             this.groupId = groupId
         }
+
+        groupViewModel.deleteResult.observe(viewLifecycleOwner) {result ->
+            if(result.isSuccess) {
+                pagingViewModel.refreshData()
+            }
+        }
+
+        groupViewModel.editResult.observe(viewLifecycleOwner) {result ->
+            if(result.isSuccess) {
+                pagingViewModel.refreshData()
+            }
+        }
+
     }
 
     private fun onSelectItem(gid: Int) {
         groupViewModel.onGroupItemSelected(gid)
+        val intent = Intent(requireContext(), GroupDetailActivity::class.java)
+        intent.putExtra("gid",gid)
+
+        startActivity(intent)
     }
 
     private fun onSelectMenu(gid: Int) {
@@ -70,19 +89,13 @@ class LibraryFragment @Inject constructor() : JBasicFragment<FragmentLibraryBind
 
     private fun onDelete() {
         groupViewModel.deleteGroup(groupId)
-        Handler(Looper.myLooper()!!).postDelayed({
-            pagingViewModel.refreshData()
-        }, 200)
     }
 
     private fun onEdit() {
-
+        editGroupDialog.show(childFragmentManager, "EditDialog")
     }
-
     override fun onResume() {
         super.onResume()
         pagingViewModel.refreshData()
     }
-
-
 }

@@ -34,6 +34,13 @@ class LinkViewModel @Inject constructor(
         }
     }
 
+    fun searchLinkByGroupId(gid : Int, query : String) {
+        viewModelScope.launch {
+            linkRepo.searchLinkByGroupId(gid, query)
+        }
+
+    }
+
     fun insertLink(link: Link) {
         viewModelScope.launch {
             linkRepo.insertLink(link)

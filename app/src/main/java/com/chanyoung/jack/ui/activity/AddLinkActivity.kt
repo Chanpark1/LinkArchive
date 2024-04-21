@@ -3,7 +3,6 @@ package com.chanyoung.jack.ui.activity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.viewModels
@@ -14,7 +13,6 @@ import com.chanyoung.jack.R
 import com.chanyoung.jack.application.ErrorMessages
 import com.chanyoung.jack.application.WebUrlUtil
 import com.chanyoung.jack.data.model.Link
-import com.chanyoung.jack.data.model.LinkGroup
 import com.chanyoung.jack.databinding.ActivityAddLinkBinding
 import com.chanyoung.jack.ui.activity.base.JMainBasicActivity
 import com.chanyoung.jack.ui.adapter.recycler.GroupItemAdapter
@@ -34,7 +32,7 @@ class AddLinkActivity : JMainBasicActivity<ActivityAddLinkBinding>() {
     private val webScrapperViewModel: WebScraperViewModel by viewModels()
     private val clipBoardViewModel: ClipBoardViewModel by viewModels()
 
-    private val createGroupDialog: CreateGroupDialog by lazy { CreateGroupDialog(::createGroup) }
+    private val createGroupDialog: CreateGroupDialog by lazy { CreateGroupDialog() }
 
     private lateinit var adapter: GroupItemAdapter
 
@@ -86,11 +84,6 @@ class AddLinkActivity : JMainBasicActivity<ActivityAddLinkBinding>() {
             createGroupDialog.show(supportFragmentManager, "CreateGroupFragment")
 
         }
-    }
-
-    private fun createGroup(groupName: String) {
-        val linkGroup = LinkGroup(name =  groupName)
-        groupViewModel.insertGroup(linkGroup)
     }
 
     private fun setScrapper(url: String) {

@@ -1,14 +1,14 @@
 package com.chanyoung.jack.ui.viewmodel.networking
 
 import androidx.lifecycle.*
-import com.chanyoung.jack.data.repository.networking.WebScraperRepository
+import com.chanyoung.jack.data.web.WebScraper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class WebScraperViewModel @Inject constructor(
-    private val scrapRepo: WebScraperRepository
+    private val scrapRepo: WebScraper
 ) : ViewModel() {
 
     private val _title = MutableLiveData<String>()

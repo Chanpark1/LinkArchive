@@ -22,7 +22,10 @@ data class Link(
 )
 
 
-@Entity
+@Entity(
+    indices = [
+        Index(value = ["name"], unique = true )]
+)
 data class LinkGroup(
     @PrimaryKey(autoGenerate = true) val gid: Int = 0,
     @ColumnInfo(name = "name") val name: String,
@@ -30,8 +33,8 @@ data class LinkGroup(
 )
 
 
-@Entity(primaryKeys = ["groupId", "linkId"])
+@Entity(primaryKeys = ["gid", "lid"])
 data class GroupLinkCrossRef(
-    val groupId: Int,
-    val linkId: Int
+    val gid: Int,
+    val lid: Int
 )

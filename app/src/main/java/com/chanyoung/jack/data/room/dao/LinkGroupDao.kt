@@ -12,6 +12,10 @@ interface LinkGroupDao {
     suspend fun deleteGroup(group : LinkGroup)
 
     @Transaction
+    @Query("UPDATE LinkGroup SET name = :name WHERE gid = :gid")
+    suspend fun updateGroup(name : String, gid : Int)
+
+    @Transaction
     @Query("SELECT COUNT(*) FROM LinkGroup")
     suspend fun getGroupCount() : Int
 

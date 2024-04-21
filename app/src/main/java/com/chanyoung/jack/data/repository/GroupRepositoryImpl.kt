@@ -29,6 +29,11 @@ class GroupRepositoryImpl @Inject constructor(
             dao.getLinkGroup(gid)
         }
     }
+    override suspend fun updateGroup(name : String, gid : Int) {
+        return withContext(Dispatchers.IO) {
+            dao.updateGroup(name, gid)
+        }
+    }
 
     override suspend fun getAllGroup(): List<LinkGroup> {
         return withContext(Dispatchers.IO) {

@@ -4,12 +4,13 @@ import android.content.Context
 import androidx.room.Room
 import com.chanyoung.jack.data.repository.GroupRepositoryImpl
 import com.chanyoung.jack.data.repository.LinkRepositoryImpl
-import com.chanyoung.jack.data.repository.networking.WebScraperRepository
-import com.chanyoung.jack.data.repository.pagination.ListGroupPagingSource
-import com.chanyoung.jack.data.repository.pagination.ListLinkPagingSource
+import com.chanyoung.jack.data.web.WebScraper
+import com.chanyoung.jack.data.source.pagination.ListGroupPagingSource
+import com.chanyoung.jack.data.source.pagination.ListLinkPagingSource
 import com.chanyoung.jack.data.room.dao.LinkDao
 import com.chanyoung.jack.data.room.dao.LinkGroupDao
 import com.chanyoung.jack.data.room.database.JDatabase
+import com.chanyoung.jack.data.source.pagination.ListLinkInGroupPagingSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +19,22 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 import javax.inject.Singleton
+
+
+@Module
+@InstallIn(SingletonComponent::class)
+object TestAppModule {
+    @Provides
+    @Named("test_db")
+    fun provideInMemoryDB(@ApplicationContext context: Context) =
+        Room.inMemoryDatabaseBuilder(
+            context,
+            JDatabase::class.java
+        ).allowMainThreadQueries().build()
+}
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -54,8 +70,8 @@ class DatabaseModules {
 class NetworkModule {
     @Provides
     @Singleton
-    fun provideWebScrapperRepo(okHttpClient: OkHttpClient): WebScraperRepository =
-        WebScraperRepository(okHttpClient)
+    fun provideWebScrapperRepo(okHttpClient: OkHttpClient): WebScraper =
+        WebScraper(okHttpClient)
 
     @Provides
     @Singleton
@@ -85,4 +101,9 @@ class OtherModules {
     @Singleton
     fun provideGroupPagingSource(groupRepo: GroupRepositoryImpl): ListGroupPagingSource =
         ListGroupPagingSource(groupRepo)
+
+    @Provides
+    @Singleton
+    fun provideLinkInGroupPagingSource(linkRepo: LinkRepositoryImpl, groupId : Int) : ListLinkInGroupPagingSource =
+        ListLinkInGroupPagingSource(linkRepo, groupId)
 }

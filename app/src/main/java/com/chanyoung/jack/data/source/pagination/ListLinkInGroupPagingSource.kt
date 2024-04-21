@@ -1,4 +1,4 @@
-package com.chanyoung.jack.data.repository.pagination
+package com.chanyoung.jack.data.source.pagination
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
@@ -7,27 +7,28 @@ import com.chanyoung.jack.data.repository.LinkRepositoryImpl
 import javax.inject.Singleton
 
 @Singleton
-class ListLinkPagingSource(
-    private val linkRepo: LinkRepositoryImpl
+class ListLinkInGroupPagingSource(
+    private val linkRepo: LinkRepositoryImpl,
+    private val groupId: Int
 ) : PagingSource<Int, Link>() {
 
     private companion object {
-        const val INIT_PAGE_INDEX = 0
+        private const val INIT_PAGE_INDEX = 0
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Link> {
         return try {
             val currentPage = params.key ?: INIT_PAGE_INDEX
-            val pageSize = params.loadSize
-
-            val links = linkRepo.getPaginatedLinks(currentPage, pageSize)
+            val loadSize = params.loadSize
+            val data = linkRepo.getPaginatedLinksByGroupId(currentPage, loadSize, groupId)
 
             LoadResult.Page(
-                data = links,
-                prevKey = if (currentPage == INIT_PAGE_INDEX) null else currentPage - 1,
-                nextKey = if (links.isEmpty()) null else currentPage + 1
+                data = data,
+                prevKey = if(currentPage == INIT_PAGE_INDEX) null else currentPage -1,
+                nextKey = if(data.isEmpty()) null else currentPage + 1
             )
-        } catch (e: Exception) {
+
+        } catch (e : Exception) {
             LoadResult.Error(e)
         }
     }
@@ -38,4 +39,8 @@ class ListLinkPagingSource(
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
         }
     }
+
+
+
 }
+

@@ -18,7 +18,7 @@ class HomeFragment @Inject constructor() :
     private val viewModel : LinkPagingViewModel by activityViewModels()
 
     private lateinit var adapter : AllLinkListAdapter
-    override fun layoutId(): Int { return R.layout.fragment_home }
+    override fun layoutId(): Int = R.layout.fragment_home
     override fun onCreateView() {
 
         initRecyclerView()
@@ -30,7 +30,7 @@ class HomeFragment @Inject constructor() :
         binding.fragHomeRv.layoutManager = LinearLayoutManager(requireContext())
         binding.fragHomeRv.adapter = adapter
 
-        viewModel.links.observe(viewLifecycleOwner) {links ->
+        viewModel.items.observe(viewLifecycleOwner) {links ->
             adapter.submitData(viewLifecycleOwner.lifecycle, links)
         }
     }

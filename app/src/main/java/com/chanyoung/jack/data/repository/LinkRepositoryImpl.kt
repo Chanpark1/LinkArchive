@@ -46,6 +46,12 @@ class LinkRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getPaginatedLinksByGroupId(index: Int, loadSize: Int, gid: Int): List<Link> {
+        return withContext(Dispatchers.IO) {
+            linkDao.getPaginatedLinksByGroupId(index, loadSize, gid)
+        }
+    }
+
     override suspend fun deleteLink(link : Link) {
        return withContext(Dispatchers.IO) {
            linkDao.deleteLink(link)
@@ -73,4 +79,9 @@ class LinkRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun searchLinkByGroupId(gid: Int, query: String) : List<Link> {
+        return withContext(Dispatchers.IO) {
+            linkDao.searchLinkByGroupId(gid, query)
+        }
+    }
 }

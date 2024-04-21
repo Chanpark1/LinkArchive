@@ -24,14 +24,6 @@
         <action
             android:id="@+id/action_homeFragment_to_bookmarkFragment"
             app:destination="@id/bookmarkFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_linkDetailFragment"
-            app:destination="@id/linkDetailFragment">
-            <argument
-                android:name="lid"
-                app:argType="integer"
-                android:defaultValue="0"/>
-        </action>
     </fragment>
 
     <fragment
@@ -49,6 +41,7 @@
         <action
             android:id="@+id/action_libraryFragment_to_bookmarkFragment"
             app:destination="@id/bookmarkFragment" />
+
     </fragment>
 
     <fragment
@@ -85,17 +78,5 @@
             android:id="@+id/action_bookmarkFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
     </fragment>
-
-    <fragment
-        android:id="@+id/linkDetailFragment"
-        android:name="com.chanyoung.jack.ui.fragment.LinkDetailFragment"
-        android:label="LinkDetailFragment"
-        tools:layout="@layout/fragment_link_detail">
-        <argument
-            android:name="lid"
-            app:argType="integer"
-            android:defaultValue="0" />
-    </fragment>
-
 
 </navigation>
