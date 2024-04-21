@@ -2,15 +2,15 @@ package com.chanyoung.jack.application
 
 import android.content.Context
 import androidx.room.Room
+import com.chanyoung.jack.data.model.Link
+import com.chanyoung.jack.data.model.LinkGroup
 import com.chanyoung.jack.data.repository.GroupRepositoryImpl
 import com.chanyoung.jack.data.repository.LinkRepositoryImpl
 import com.chanyoung.jack.data.web.WebScraper
-import com.chanyoung.jack.data.source.pagination.ListGroupPagingSource
-import com.chanyoung.jack.data.source.pagination.ListLinkPagingSource
 import com.chanyoung.jack.data.room.dao.LinkDao
 import com.chanyoung.jack.data.room.dao.LinkGroupDao
 import com.chanyoung.jack.data.room.database.JDatabase
-import com.chanyoung.jack.data.source.pagination.ListLinkInGroupPagingSource
+import com.chanyoung.jack.ui.viewmodel.paging.basic.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -94,16 +94,37 @@ class NetworkModule {
 class OtherModules {
     @Provides
     @Singleton
-    fun provideLinkPagingSource(linkRepo: LinkRepositoryImpl): ListLinkPagingSource =
-        ListLinkPagingSource(linkRepo)
+    fun provideListLinkPagingSourceParamsProvider(
+        linkRepo: LinkRepositoryImpl
+    ): PagingSourceParamsProvider<Link> {
+        return ListLinkPagingSourceParamsProvider(linkRepo)
+    }
+
+    @Singleton
+    @Provides
+    fun provideListGroupPagingSourceParamsProvider(
+        groupRepo: GroupRepositoryImpl
+    ): PagingSourceParamsProvider<LinkGroup> {
+        return ListGroupPagingSourceParamsProvider(groupRepo)
+    }
+
 
     @Provides
     @Singleton
-    fun provideGroupPagingSource(groupRepo: GroupRepositoryImpl): ListGroupPagingSource =
-        ListGroupPagingSource(groupRepo)
+    @LinkInGroupProvider
+    fun provideListLinkInGroupIdPagingSourceParamsProvider(
+        linkRepo: LinkRepositoryImpl
+    ) : PagingSourceParamsProvider<Link> {
+        return ListLinkInGroupPagingSourceParamsProvider(linkRepo)
+    }
 
     @Provides
     @Singleton
-    fun provideLinkInGroupPagingSource(linkRepo: LinkRepositoryImpl, groupId : Int) : ListLinkInGroupPagingSource =
-        ListLinkInGroupPagingSource(linkRepo, groupId)
+    @SearchProvider
+    fun provideListLinkSearchPagingSourceParamsProvider(
+        linkRepo: LinkRepositoryImpl
+    ) : PagingSourceParamsProvider<Link> {
+        return ListLinkSearchPagingSourceParamsProvider(linkRepo)
+    }
+
 }

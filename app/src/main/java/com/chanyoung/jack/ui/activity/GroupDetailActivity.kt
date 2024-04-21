@@ -17,6 +17,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class GroupDetailActivity : JMainBasicActivity<ActivityGroupDetailBinding>() {
 
+     companion object {
+        const val GROUP_ID = "gid"
+    }
+
     private val groupViewModel: GroupViewModel by viewModels()
     private val linkPagingViewModel : LinkInGroupPagingViewModel by viewModels()
 
@@ -32,7 +36,7 @@ class GroupDetailActivity : JMainBasicActivity<ActivityGroupDetailBinding>() {
     }
 
     private fun getGroupId() : Int {
-        return intent.getIntExtra("gid", 0)
+        return intent.getIntExtra(GROUP_ID, 0)
     }
 
     private fun setupBinding() {

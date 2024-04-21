@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import androidx.paging.*
 
 abstract class JBasePagingViewModel<T : Any>(
-    private val pagingSource: PagingSource<Int, T>
+    val pagingSourceParamsProvider: PagingSourceParamsProvider<T>
 ) : ViewModel() {
 
     protected companion object {
@@ -24,7 +24,7 @@ abstract class JBasePagingViewModel<T : Any>(
     val items: LiveData<PagingData<T>> get() = _items
 
     protected fun loadData() {
-        val pager = Pager(pagingConfig) { pagingSource }
+        val pager = Pager(pagingConfig) { pagingSourceParamsProvider.getPagingSource() }
         pager.flow
             .cachedIn(viewModelScope)
             .asLiveData()
