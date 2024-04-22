@@ -7,7 +7,6 @@ abstract class JBasePagingSource<T : Any> : PagingSource<Int, T>() {
 
     protected companion object {
         const val INIT_PAGE_INDEX = 0
-        const val DEFAULT_GROUP_ID = 0
     }
 
     abstract suspend fun loadFromRepo(params: LoadParams<Int>): List<T>

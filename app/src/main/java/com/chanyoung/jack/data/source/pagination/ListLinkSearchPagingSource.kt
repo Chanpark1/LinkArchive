@@ -1,26 +1,18 @@
 package com.chanyoung.jack.data.source.pagination
 
-import androidx.paging.PagingSource
-import androidx.paging.PagingState
 import com.chanyoung.jack.data.model.Link
 import com.chanyoung.jack.data.repository.LinkRepositoryImpl
+import com.chanyoung.jack.data.source.pagination.basic.JBasePagingSource
 import javax.inject.Singleton
 
 @Singleton
 class ListLinkSearchPagingSource(
-    private val linkRepo: LinkRepositoryImpl
-) : PagingSource<Int, Link>() {
-
-    private companion object {
-        private const val INIT_PAGE_INDEX = 0
+    private val linkRepo: LinkRepositoryImpl,
+    private val groupId : Int,
+    private val query : String
+) : JBasePagingSource<Link>() {
+    override suspend fun loadFromRepo(params: LoadParams<Int>): List<Link> {
+        return linkRepo.searchLinkByGroupId(groupId, query, params.key ?: INIT_PAGE_INDEX, params.loadSize)
     }
-    override fun getRefreshKey(state: PagingState<Int, Link>): Int? {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Link> {
-        TODO("Not yet implemented")
-    }
-
 
 }

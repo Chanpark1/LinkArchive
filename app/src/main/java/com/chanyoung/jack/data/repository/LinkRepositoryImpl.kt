@@ -79,9 +79,9 @@ class LinkRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun searchLinkByGroupId(gid: Int, query: String) : List<Link> {
+    override suspend fun searchLinkByGroupId(gid: Int, query: String,index : Int, loadSize: Int) : List<Link> {
         return withContext(Dispatchers.IO) {
-            linkDao.searchLinkByGroupId(gid, query)
+            linkDao.searchLinkByGroupId(gid, query, index, loadSize)
         }
     }
 }

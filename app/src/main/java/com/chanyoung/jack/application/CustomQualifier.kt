@@ -10,6 +10,3 @@ annotation class LinkInGroupProvider
 @Retention(AnnotationRetention.RUNTIME)
 annotation class SearchProvider
 
-@Qualifier
-@Retention(AnnotationRetention.SOURCE)
-annotation class GroupId

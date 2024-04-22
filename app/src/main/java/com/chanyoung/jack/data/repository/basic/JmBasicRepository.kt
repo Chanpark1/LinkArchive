@@ -14,7 +14,7 @@ interface LinkRepository {
     suspend fun deleteLink(link : Link)
     suspend fun relocateLink(lid : Int, oldGid : Int, newGid : Int)
     suspend fun updateLink(lid : Int, title : String, url : String, memo : String, image_path : String?)
-    suspend fun searchLinkByGroupId(gid : Int, query : String) : List<Link>
+    suspend fun searchLinkByGroupId(gid : Int, query : String, index : Int, loadSize: Int) : List<Link>
 }
 
 interface GroupRepository {

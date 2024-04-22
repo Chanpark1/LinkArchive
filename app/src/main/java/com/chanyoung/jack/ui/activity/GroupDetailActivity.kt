@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +13,7 @@ import com.chanyoung.jack.ui.activity.base.JMainBasicActivity
 import com.chanyoung.jack.ui.adapter.recycler.AllLinkListAdapter
 import com.chanyoung.jack.ui.viewmodel.GroupViewModel
 import com.chanyoung.jack.ui.viewmodel.paging.LinkInGroupPagingViewModel
+import com.chanyoung.jack.ui.viewmodel.paging.LinkSearchPagingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,6 +25,7 @@ class GroupDetailActivity : JMainBasicActivity<ActivityGroupDetailBinding>() {
 
     private val groupViewModel: GroupViewModel by viewModels()
     private val linkPagingViewModel : LinkInGroupPagingViewModel by viewModels()
+    private val searchPagingViewModel : LinkSearchPagingViewModel by viewModels()
 
     private lateinit var adapter : AllLinkListAdapter
     override fun viewBindingInflate(inflater: LayoutInflater): ActivityGroupDetailBinding = ActivityGroupDetailBinding.inflate(layoutInflater)
@@ -32,7 +35,10 @@ class GroupDetailActivity : JMainBasicActivity<ActivityGroupDetailBinding>() {
         setContentView(binding.root)
 
         setupObserver()
+
         initRecyclerView()
+
+        setupSearch()
     }
 
     private fun getGroupId() : Int {
@@ -43,6 +49,7 @@ class GroupDetailActivity : JMainBasicActivity<ActivityGroupDetailBinding>() {
         if(getGroupId() != 0) {
             groupViewModel.getGroup(getGroupId())
             linkPagingViewModel.initGroupId(getGroupId())
+            searchPagingViewModel.initGroupId(getGroupId())
         }
     }
 
@@ -53,6 +60,10 @@ class GroupDetailActivity : JMainBasicActivity<ActivityGroupDetailBinding>() {
         }
 
         linkPagingViewModel.items.observe(this) {links ->
+            adapter.submitData(this.lifecycle, links)
+        }
+
+        searchPagingViewModel.items.observe(this) {links ->
             adapter.submitData(this.lifecycle, links)
         }
     }
@@ -75,7 +86,9 @@ class GroupDetailActivity : JMainBasicActivity<ActivityGroupDetailBinding>() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                searchPagingViewModel.updateQueryData(s.toString())
 
+                Log.d("onTextChanged", s.toString())
             }
 
             override fun afterTextChanged(s: Editable?) {}

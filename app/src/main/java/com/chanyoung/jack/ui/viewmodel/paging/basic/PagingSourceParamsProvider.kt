@@ -62,6 +62,6 @@ class ListLinkSearchPagingSourceParamsProvider(
         this.queryData = query
     }
     override fun getPagingSource(): PagingSource<Int, Link> {
-        return ListLinkSearchPagingSource(linkRepo)
+        return ListLinkSearchPagingSource(linkRepo, groupId, queryData)
     }
 }
