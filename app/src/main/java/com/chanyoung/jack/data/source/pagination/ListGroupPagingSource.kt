@@ -3,9 +3,7 @@ package com.chanyoung.jack.data.source.pagination
 import com.chanyoung.jack.data.model.LinkGroup
 import com.chanyoung.jack.data.repository.GroupRepositoryImpl
 import com.chanyoung.jack.data.source.pagination.basic.JBasePagingSource
-import javax.inject.Singleton
 
-@Singleton
 class ListGroupPagingSource(
     private val groupRepo: GroupRepositoryImpl
 ) : JBasePagingSource<LinkGroup>() {

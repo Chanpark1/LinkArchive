@@ -29,7 +29,6 @@
                 android:text="@string/library"
                 android:textColor="@color/black"
                 android:textSize="21sp"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

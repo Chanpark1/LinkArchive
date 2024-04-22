@@ -22,11 +22,9 @@
                 android:id="@+id/frag_search_logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_bold"
                 android:text="@string/search"
                 android:textColor="@color/black"
                 android:textSize="21sp"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -36,7 +34,7 @@
                 android:layout_height="27dp"
                 android:layout_marginStart="10dp"
                 android:contentDescription="@string/content_description"
-                android:src="@drawable/icon_folder_list"
+                android:src="@drawable/icon_folder"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/frag_search_logo"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -52,6 +50,36 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/frag_search_const" />
 
+        <FrameLayout
+            android:id="@+id/frag_search_frame"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/frag_search_const"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp">
+
+            <EditText
+                android:id="@+id/frag_search_input"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingStart="40dp"
+                android:paddingEnd="5dp"
+                android:background="@drawable/edit_text_custom"
+                android:autofillHints="name"
+                android:inputType="text"
+                android:textColor="@color/black"
+                android:hint="@string/search"/>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_marginStart="5dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/baseline_search_24"
+                android:contentDescription="@string/content_description"/>
+
+        </FrameLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/frag_search_rv"
             android:layout_width="0dp"
@@ -59,6 +87,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frag_search_view" />
+            app:layout_constraintTop_toBottomOf="@+id/frag_search_frame" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

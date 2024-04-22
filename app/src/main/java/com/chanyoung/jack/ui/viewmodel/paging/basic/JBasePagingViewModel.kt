@@ -2,6 +2,7 @@ package com.chanyoung.jack.ui.viewmodel.paging.basic
 
 import androidx.lifecycle.*
 import androidx.paging.*
+import com.chanyoung.jack.data.source.pagination.basic.PagingSourceParamsProvider
 
 abstract class JBasePagingViewModel<T : Any>(
     val pagingSourceParamsProvider: PagingSourceParamsProvider<T>

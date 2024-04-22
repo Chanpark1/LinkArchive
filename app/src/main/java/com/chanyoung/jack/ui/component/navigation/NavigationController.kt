@@ -32,8 +32,8 @@ class NavigationController(
                 R.id.searchFragment -> {
                     bottomNavigationView.menu.findItem(R.id.searchFragment)?.isChecked = true
                 }
-                R.id.bookmarkFragment -> {
-                    bottomNavigationView.menu.findItem(R.id.bookmarkFragment)?.isChecked = true
+                R.id.settingFragment -> {
+                    bottomNavigationView.menu.findItem(R.id.settingFragment)?.isChecked = true
 
                 }
                 else -> {

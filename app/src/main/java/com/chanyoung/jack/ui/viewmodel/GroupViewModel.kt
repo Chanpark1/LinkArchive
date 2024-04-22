@@ -60,6 +60,7 @@ class GroupViewModel @Inject constructor(
 
         }
     }
+
     fun onGroupItemSelected(groupId : Int) {
         _selectedGroupId.value = groupId
     }

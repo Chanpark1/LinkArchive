@@ -1,15 +1,14 @@
-package com.chanyoung.jack.ui.viewmodel.paging.basic
+package com.chanyoung.jack.data.source.pagination.basic
 
 import androidx.paging.PagingSource
 import com.chanyoung.jack.application.LinkInGroupProvider
+import com.chanyoung.jack.application.SearchInGroupProvider
+import com.chanyoung.jack.application.SearchProvider
 import com.chanyoung.jack.data.model.Link
 import com.chanyoung.jack.data.model.LinkGroup
 import com.chanyoung.jack.data.repository.GroupRepositoryImpl
 import com.chanyoung.jack.data.repository.LinkRepositoryImpl
-import com.chanyoung.jack.data.source.pagination.ListLinkInGroupPagingSource
-import com.chanyoung.jack.data.source.pagination.ListLinkPagingSource
-import com.chanyoung.jack.data.source.pagination.ListLinkSearchPagingSource
-import com.chanyoung.jack.data.source.pagination.ListGroupPagingSource
+import com.chanyoung.jack.data.source.pagination.*
 
 
 interface PagingSourceParamsProvider<T : Any> {
@@ -46,8 +45,8 @@ class ListLinkInGroupPagingSourceParamsProvider(
         return ListLinkInGroupPagingSource(linkRepo, groupId)
     }
 }
-
-class ListLinkSearchPagingSourceParamsProvider(
+@SearchInGroupProvider
+class ListLinkSearchInGroupPagingSourceParamsProvider(
     private val linkRepo: LinkRepositoryImpl
 ) : PagingSourceParamsProvider<Link> {
 
@@ -61,7 +60,21 @@ class ListLinkSearchPagingSourceParamsProvider(
     fun setQueryData(query: String) {
         this.queryData = query
     }
+
     override fun getPagingSource(): PagingSource<Int, Link> {
-        return ListLinkSearchPagingSource(linkRepo, groupId, queryData)
+        return ListLinkSearchInGroupPagingSource(linkRepo, groupId, queryData)
+    }
+}
+@SearchProvider
+class ListLinkSearchPagingSourceParamsProvider(
+    private val linkRepo: LinkRepositoryImpl
+) : PagingSourceParamsProvider<Link> {
+
+    private var queryData : String = ""
+    fun setQueryData(query: String) {
+        this.queryData = query
+    }
+    override fun getPagingSource(): PagingSource<Int, Link> {
+        return ListLinkSearchPagingSource(linkRepo,queryData)
     }
 }

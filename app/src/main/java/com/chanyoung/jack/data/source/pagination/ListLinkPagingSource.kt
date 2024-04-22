@@ -3,9 +3,7 @@ package com.chanyoung.jack.data.source.pagination
 import com.chanyoung.jack.data.model.Link
 import com.chanyoung.jack.data.repository.LinkRepositoryImpl
 import com.chanyoung.jack.data.source.pagination.basic.JBasePagingSource
-import javax.inject.Singleton
 
-@Singleton
 class ListLinkPagingSource(
     private val linkRepo: LinkRepositoryImpl
 ) : JBasePagingSource<Link>() {

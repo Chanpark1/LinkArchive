@@ -7,6 +7,7 @@ import com.chanyoung.jack.R
 import com.chanyoung.jack.databinding.FragmentLibraryBinding
 import com.chanyoung.jack.ui.activity.GroupDetailActivity
 import com.chanyoung.jack.ui.adapter.recycler.AllGroupListAdapter
+import com.chanyoung.jack.ui.component.dialog.CreateGroupDialog
 import com.chanyoung.jack.ui.component.dialog.EditGroupDialog
 import com.chanyoung.jack.ui.component.dialog.GroupOptionDialog
 import com.chanyoung.jack.ui.fragment.basic.JBasicFragment
@@ -34,11 +35,15 @@ class LibraryFragment @Inject constructor() : JBasicFragment<FragmentLibraryBind
 
     private val editGroupDialog: EditGroupDialog by lazy { EditGroupDialog() }
 
+    private val createGroupDialog: CreateGroupDialog by lazy { CreateGroupDialog() }
+
     override fun layoutId(): Int = R.layout.fragment_library
     override fun onCreateView() {
         initRecyclerView()
 
         setupObserver()
+
+        onCreateGroup()
     }
 
     override fun initRecyclerView() {
@@ -49,10 +54,6 @@ class LibraryFragment @Inject constructor() : JBasicFragment<FragmentLibraryBind
 
         binding.fragLibRv.layoutManager = LinearLayoutManager(requireContext())
         binding.fragLibRv.adapter = adapter
-
-        pagingViewModel.items.observe(viewLifecycleOwner) { groups ->
-            adapter.submitData(viewLifecycleOwner.lifecycle, groups)
-        }
     }
 
     private fun setupObserver() {
@@ -60,13 +61,24 @@ class LibraryFragment @Inject constructor() : JBasicFragment<FragmentLibraryBind
             this.groupId = groupId
         }
 
+        pagingViewModel.items.observe(viewLifecycleOwner) { groups ->
+            adapter.submitData(viewLifecycleOwner.lifecycle, groups)
+        }
+
         groupViewModel.deleteResult.observe(viewLifecycleOwner) {result ->
+            if(result.isSuccess) {
+                pagingViewModel.refreshData()
+                groupViewModel.createDefaultLinkGroup()
+            }
+        }
+
+        groupViewModel.editResult.observe(viewLifecycleOwner) {result ->
             if(result.isSuccess) {
                 pagingViewModel.refreshData()
             }
         }
 
-        groupViewModel.editResult.observe(viewLifecycleOwner) {result ->
+        groupViewModel.insertGroupResult.observe(viewLifecycleOwner) {result ->
             if(result.isSuccess) {
                 pagingViewModel.refreshData()
             }
@@ -87,6 +99,12 @@ class LibraryFragment @Inject constructor() : JBasicFragment<FragmentLibraryBind
         groupViewModel.onGroupItemSelected(gid)
     }
 
+    private fun onCreateGroup() {
+        binding.fragLibAdd.setOnClickListener {
+            createGroupDialog.show(childFragmentManager, "CreateDialog")
+        }
+    }
+
     private fun onDelete() {
         groupViewModel.deleteGroup(groupId)
     }
@@ -97,5 +115,6 @@ class LibraryFragment @Inject constructor() : JBasicFragment<FragmentLibraryBind
     override fun onResume() {
         super.onResume()
         pagingViewModel.refreshData()
+        groupViewModel.createDefaultLinkGroup()
     }
 }

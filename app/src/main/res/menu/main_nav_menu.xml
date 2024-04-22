@@ -23,9 +23,9 @@
         android:icon="@drawable/icon_search"/>
 
     <item
-        android:id="@+id/bookmarkFragment"
-        android:title="@string/bookmark"
+        android:id="@+id/settingFragment"
+        android:title="@string/setting"
         android:orderInCategory="4"
         android:enabled="true"
-        android:icon="@drawable/icon_bookmark"/>
+        android:icon="@drawable/icon_setting"/>
 </menu>

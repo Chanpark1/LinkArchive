@@ -47,4 +47,9 @@ interface LinkDao {
     @Query("SELECT * FROM Link WHERE gid = :gid AND title LIKE '%' || :query || '%' ORDER BY lid DESC LIMIT :loadSize OFFSET :index * :loadSize")
     suspend fun searchLinkByGroupId(gid : Int, query : String, index : Int, loadSize: Int) : List<Link>
 
+    @Transaction
+    @Query("SELECT * FROM Link WHERE title LIKE '%' || :query || '%' ORDER BY lid DESC LIMIT :loadSize OFFSET :index * :loadSize")
+    suspend fun searchLink(query: String, index : Int, loadSize: Int) : List<Link>
+
+
 }

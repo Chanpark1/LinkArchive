@@ -4,8 +4,8 @@ import androidx.lifecycle.*
 import com.chanyoung.jack.application.LinkInGroupProvider
 import com.chanyoung.jack.data.model.Link
 import com.chanyoung.jack.ui.viewmodel.paging.basic.JBasePagingViewModel
-import com.chanyoung.jack.ui.viewmodel.paging.basic.ListLinkInGroupPagingSourceParamsProvider
-import com.chanyoung.jack.ui.viewmodel.paging.basic.PagingSourceParamsProvider
+import com.chanyoung.jack.data.source.pagination.basic.ListLinkInGroupPagingSourceParamsProvider
+import com.chanyoung.jack.data.source.pagination.basic.PagingSourceParamsProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

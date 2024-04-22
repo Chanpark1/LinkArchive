@@ -31,10 +31,3 @@ data class LinkGroup(
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "linkCount") val linkCount : Int = 0
 )
-
-
-@Entity(primaryKeys = ["gid", "lid"])
-data class GroupLinkCrossRef(
-    val gid: Int,
-    val lid: Int
-)

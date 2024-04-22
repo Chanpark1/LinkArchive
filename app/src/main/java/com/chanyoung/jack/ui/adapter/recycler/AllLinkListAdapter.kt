@@ -45,12 +45,12 @@ class LinkListItemViewHolder(binding : ItemAllLinkBinding) : JmBaseViewHolder<It
         }
     }
 
-    fun setItem(link : Link, onSelect: (Int) -> Unit) {
+    fun setItem(link : Link?, onSelect: (Int) -> Unit) {
 
         binding.link = link
 
         binding.root.setOnClickListener {
-            onSelect(link.lid)
+            link?.lid?.let { lid -> onSelect(lid) }
         }
     }
 

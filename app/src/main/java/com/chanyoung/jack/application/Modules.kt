@@ -10,6 +10,7 @@ import com.chanyoung.jack.data.web.WebScraper
 import com.chanyoung.jack.data.room.dao.LinkDao
 import com.chanyoung.jack.data.room.dao.LinkGroupDao
 import com.chanyoung.jack.data.room.database.JDatabase
+import com.chanyoung.jack.data.source.pagination.basic.*
 import com.chanyoung.jack.ui.viewmodel.paging.basic.*
 import dagger.Module
 import dagger.Provides
@@ -91,7 +92,7 @@ class NetworkModule {
 
 @Module
 @InstallIn(SingletonComponent::class)
-class OtherModules {
+class PagingSourceParamProviderModules {
     @Provides
     @Singleton
     fun provideListLinkPagingSourceParamsProvider(
@@ -108,7 +109,6 @@ class OtherModules {
         return ListGroupPagingSourceParamsProvider(groupRepo)
     }
 
-
     @Provides
     @Singleton
     @LinkInGroupProvider
@@ -120,10 +120,19 @@ class OtherModules {
 
     @Provides
     @Singleton
+    @SearchInGroupProvider
+    fun provideListLinkSearchInGroupPagingSourceParamsProvider(
+        linkRepo: LinkRepositoryImpl
+    ) : PagingSourceParamsProvider<Link> {
+        return ListLinkSearchInGroupPagingSourceParamsProvider(linkRepo)
+    }
+
+    @Provides
+    @Singleton
     @SearchProvider
     fun provideListLinkSearchPagingSourceParamsProvider(
         linkRepo: LinkRepositoryImpl
-    ) : PagingSourceParamsProvider<Link> {
+    ): PagingSourceParamsProvider<Link> {
         return ListLinkSearchPagingSourceParamsProvider(linkRepo)
     }
 
