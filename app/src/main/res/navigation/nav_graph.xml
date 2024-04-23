@@ -21,9 +21,7 @@
         <action
             android:id="@+id/action_homeFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_settingFragment"
-            app:destination="@id/settingFragment" />
+
     </fragment>
 
     <fragment
@@ -38,9 +36,7 @@
         <action
             android:id="@+id/action_libraryFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
-        <action
-            android:id="@+id/action_libraryFragment_to_settingFragment"
-            app:destination="@id/settingFragment" />
+
 
     </fragment>
 
@@ -56,27 +52,8 @@
         <action
             android:id="@+id/action_searchFragment_to_libraryFragment"
             app:destination="@id/libraryFragment" />
-        <action
-            android:id="@+id/action_searchFragment_to_settingFragment"
-            app:destination="@id/settingFragment" />
 
-    </fragment>
 
-    <fragment
-        android:id="@+id/settingFragment"
-        android:name="com.chanyoung.jack.ui.fragment.SettingFragment"
-        android:label="settingFragment"
-        tools:layout="@layout/fragment_setting" >
-
-        <action
-            android:id="@+id/action_settingFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-        <action
-            android:id="@+id/action_settingFragment_to_libraryFragment"
-            app:destination="@id/libraryFragment" />
-        <action
-            android:id="@+id/action_settingFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
     </fragment>
 
 </navigation>
