@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.chanyoung.jack.R
 import com.chanyoung.jack.data.model.Link
 import com.chanyoung.jack.databinding.ItemAllLinkBinding
-import com.chanyoung.jmodule.adapter.JmBaseViewHolder
+import com.chanyoung.jmodule.base.adapter.JmBaseViewHolder
 
 class AllLinkListAdapter(
     private val onSelect : (Int) -> Unit

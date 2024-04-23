@@ -6,7 +6,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.chanyoung.jack.data.model.LinkGroup
 import com.chanyoung.jack.databinding.ItemLinkGroupListBinding
-import com.chanyoung.jmodule.adapter.JmBaseViewHolder
+import com.chanyoung.jmodule.base.adapter.JmBaseViewHolder
 
 class AllGroupListAdapter(
     private val onSelectItem: (Int) -> Unit,

@@ -1,7 +1,7 @@
 package com.chanyoung.jack.ui.fragment.basic
 
 import androidx.databinding.ViewDataBinding
-import com.chanyoung.jmodule.fragment.DataBindingBasicFragment
+import com.chanyoung.jmodule.base.fragment.DataBindingBasicFragment
 
 abstract class JBasicFragment<T : ViewDataBinding> : DataBindingBasicFragment<T>() {
 

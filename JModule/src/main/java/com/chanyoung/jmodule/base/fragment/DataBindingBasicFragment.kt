@@ -1,4 +1,4 @@
-package com.chanyoung.jmodule.fragment
+package com.chanyoung.jmodule.base.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

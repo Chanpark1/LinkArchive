@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import com.chanyoung.jack.R
 import com.chanyoung.jack.data.model.LinkGroup
 import com.chanyoung.jack.databinding.ItemLinkgroupBinding
-import com.chanyoung.jmodule.adapter.JmBaseAdapter
-import com.chanyoung.jmodule.adapter.JmBaseViewHolder
+import com.chanyoung.jmodule.base.adapter.JmBaseAdapter
+import com.chanyoung.jmodule.base.adapter.JmBaseViewHolder
 
 class GroupItemAdapter(
     private val selectOperation : (Int) -> Unit

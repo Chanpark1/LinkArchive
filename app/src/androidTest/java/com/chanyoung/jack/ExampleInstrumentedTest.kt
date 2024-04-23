@@ -32,20 +32,4 @@ class ExampleInstrumentedTest {
 @RunWith(AndroidJUnit4::class)
 class RecyclerViewTest {
 
-    private lateinit var linkDao : LinkDao
-    private lateinit var db : JDatabase
-
-
-    @get:Rule
-    val activityTestRule = ActivityTestRule(GroupDetailActivity::class.java)
-    @Before
-    fun createDb() {
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
-        db = Room.inMemoryDatabaseBuilder(context, JDatabase::class.java).allowMainThreadQueries().build()
-        linkDao = db.getLinkDao()
-    }
-    @Test
-    fun testRecyclerView() {
-
-    }
 }

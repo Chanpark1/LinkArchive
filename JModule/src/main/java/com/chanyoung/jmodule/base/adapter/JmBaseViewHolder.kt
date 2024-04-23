@@ -1,4 +1,4 @@
-package com.chanyoung.jmodule.adapter
+package com.chanyoung.jmodule.base.adapter
 
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView

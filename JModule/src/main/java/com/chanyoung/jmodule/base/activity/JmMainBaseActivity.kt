@@ -1,4 +1,4 @@
-package com.chanyoung.jmodule.activity
+package com.chanyoung.jmodule.base.activity
 
 import android.os.Bundle
 import androidx.lifecycle.ViewModel

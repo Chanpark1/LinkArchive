@@ -34,7 +34,7 @@
                 android:layout_height="27dp"
                 android:layout_marginStart="10dp"
                 android:contentDescription="@string/content_description"
-                android:src="@drawable/icon_folder"
+                android:src="@drawable/icon_search"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/frag_search_logo"
                 app:layout_constraintTop_toTopOf="parent" />

@@ -2,7 +2,7 @@ package com.chanyoung.jack.ui.activity.base
 
 import android.os.Bundle
 import androidx.viewbinding.ViewBinding
-import com.chanyoung.jmodule.activity.JmBaseActivity
+import com.chanyoung.jmodule.base.activity.JmBaseActivity
 
 abstract class JBasicActivity<T : ViewBinding> : JmBaseActivity<T>() {
 

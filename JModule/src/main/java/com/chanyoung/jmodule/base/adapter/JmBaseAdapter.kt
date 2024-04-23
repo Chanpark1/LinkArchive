@@ -1,4 +1,4 @@
-package com.chanyoung.jmodule.adapter
+package com.chanyoung.jmodule.base.adapter
 
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
