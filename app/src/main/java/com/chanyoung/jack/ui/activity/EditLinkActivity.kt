@@ -102,7 +102,9 @@ class EditLinkActivity : JMainBasicActivity<ActivityEditLinkBinding>() {
 
         webScrapperViewModel.title.observe(this) { title ->
             title?.let {
-                binding.editLinkTitleInput.setText(it)
+                if(it.isNotBlank()) {
+                    binding.editLinkTitleInput.setText(it)
+                }
             }
         }
 

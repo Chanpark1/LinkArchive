@@ -91,7 +91,9 @@ class AddLinkActivity : JMainBasicActivity<ActivityAddLinkBinding>() {
 
         webScrapperViewModel.title.observe(this) { title ->
             title?.let {
-                binding.addLinkTitleInput.setText(it)
+                if(it.isNotBlank()) {
+                    binding.addLinkTitleInput.setText(it)
+                }
             }
         }
 
