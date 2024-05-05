@@ -62,6 +62,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/link_detail_view"
+            android:scrollbars="none"
             tools:ignore="SpeakableTextPresentCheck">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -129,15 +130,27 @@
 
                 </androidx.cardview.widget.CardView>
 
+                <TextView
+                    android:id="@+id/link_detail_memo_logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/link_detail_cv"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/link_detail_view2"
+                    android:text="@string/memo"
+                    android:layout_marginTop="50dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"/>
+
                 <View
                     android:id="@+id/link_detail_view2"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:background="#8AA6A6A6"
-                    app:layout_constraintTop_toBottomOf="@+id/link_detail_cv"
+                    app:layout_constraintTop_toBottomOf="@+id/link_detail_memo_logo"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="50dp"/>
+                    android:layout_marginTop="15dp"/>
 
 
                 <TextView
@@ -148,9 +161,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:padding="15dp"
-                    android:textStyle="bold"
-                    android:textColor="#8A4E4E4E"/>
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/black"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
