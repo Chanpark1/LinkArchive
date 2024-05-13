@@ -1,6 +1,8 @@
 **LinkArchive - Your link organization solution**
 
 v2
+
+
 Link 생성 및 수정 시 title 입력 칸에서 텍스트가 사라지는 문제 수정
 
 
